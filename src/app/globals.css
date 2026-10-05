@@ -1,0 +1,135 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --background: #fbfbf9;
+    --foreground: #1c2826;
+    
+    --card: #ffffff;
+    --card-foreground: #1c2826;
+    
+    --popover: #ffffff;
+    --popover-foreground: #1c2826;
+    
+    /* Tourism Inspired Palette */
+    --primary: #1b4332;         /* Deep Forest Green */
+    --primary-hover: #143527;
+    --primary-foreground: #f4f7f5;
+    
+    --secondary: #e9e5d9;       /* Warm Earth / Sand */
+    --secondary-foreground: #2d2a26;
+    
+    --accent: #0284c7;          /* Sky / Teal Accent */
+    --accent-foreground: #ffffff;
+    
+    --muted: #f1ede4;
+    --muted-foreground: #6c757d;
+    
+    --destructive: #dc2626;     /* Danger */
+    --destructive-foreground: #ffffff;
+    
+    --warning: #f59e0b;         /* Amber */
+    --success: #10b981;         /* Green */
+    
+    --border: #e2ded5;
+    --input: #e2ded5;
+    --ring: #1b4332;
+    
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: #0d1512;
+    --foreground: #f0f4f2;
+    
+    --card: #14201c;
+    --card-foreground: #f0f4f2;
+    
+    --popover: #14201c;
+    --popover-foreground: #f0f4f2;
+    
+    --primary: #2d6a4f;         /* Lighter Forest Emerald for Dark Mode */
+    --primary-hover: #40916c;
+    --primary-foreground: #f8faf9;
+    
+    --secondary: #273730;
+    --secondary-foreground: #e9e5d9;
+    
+    --accent: #38bdf8;
+    --accent-foreground: #082f49;
+    
+    --muted: #1c2a24;
+    --muted-foreground: #9ca3af;
+    
+    --destructive: #ef4444;
+    --destructive-foreground: #ffffff;
+    
+    --warning: #fbbf24;
+    --success: #34d399;
+    
+    --border: #23342d;
+    --input: #23342d;
+    --ring: #52b788;
+  }
+}
+
+body {
+  background-color: transparent;
+  color: var(--foreground);
+  font-feature-settings: "rlig" 1, "calt" 1;
+  transition: color 0.25s ease;
+  overflow-x: hidden;
+}
+
+/* Glassmorphism utility */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 222, 213, 0.6);
+}
+
+.dark .glass-panel {
+  background: rgba(20, 32, 28, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(35, 52, 45, 0.6);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #334155;
+}
+
+/* Pulse animation for crowd alert */
+@keyframes alertPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 14px rgba(220, 38, 38, 0);
+  }
+}
+
+.animate-alert-pulse {
+  animation: alertPulse 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+/* Leaflet map styles */
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.75rem;
+  z-index: 10;
+}
