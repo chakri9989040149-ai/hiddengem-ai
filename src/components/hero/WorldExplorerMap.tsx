@@ -11,18 +11,344 @@ import {
   Plus,
   Minus,
   Home,
-  RotateCcw,
   Globe2,
   X,
+  Minimize2,
+  Maximize2,
+  ExternalLink,
   ChevronRight,
   Layers,
-  ChevronDown,
-  ChevronUp,
-  Maximize2,
-  Minimize2,
 } from 'lucide-react';
-import { WORLD_COUNTRIES, WorldDestination, CountryData } from '@/data/countryDestinations';
-import { useAppStore } from '@/lib/store';
+import { getAssetPath } from '@/lib/utils';
+
+export interface MapDestination {
+  id: string;
+  slug?: string;
+  name: string;
+  stateOrRegion: string;
+  country: string;
+  countryCode: string;
+  flag: string;
+  lat: number;
+  lng: number;
+  subtitle: string;
+  image: string;
+  isAvailableInApp: boolean;
+  hiddenGemHighlight?: string;
+  tags?: string[];
+}
+
+export const REAL_WORLD_DESTINATIONS: MapDestination[] = [
+  // INDIA HUBS & DESTINATIONS
+  {
+    id: 'tirupati',
+    slug: 'tirupati',
+    name: 'Tirupati',
+    stateOrRegion: 'Andhra Pradesh',
+    country: 'India',
+    countryCode: 'IN',
+    flag: '🇮🇳',
+    lat: 13.6288,
+    lng: 79.4192,
+    subtitle: 'Sacred Hill City & Eastern Ghats Hidden Valleys',
+    image: getAssetPath('/images/destinations/tirupati_tirumala_hero.jpg'),
+    isAvailableInApp: true,
+    hiddenGemHighlight: 'Talakona Waterfall & Silathoranam Prehistoric Arch',
+    tags: ['Temples', 'Waterfalls', 'Biosphere'],
+  },
+  {
+    id: 'hampi',
+    slug: 'hampi',
+    name: 'Hampi',
+    stateOrRegion: 'Karnataka',
+    country: 'India',
+    countryCode: 'IN',
+    flag: '🇮🇳',
+    lat: 15.335,
+    lng: 76.46,
+    subtitle: 'UNESCO Vijayanagara Stone Ruins & Boulder Rivers',
+    image: getAssetPath('/images/destinations/hampi_stone_chariot_hero.jpg'),
+    isAvailableInApp: true,
+    hiddenGemHighlight: 'Sanapur Lake Coracle & Anegundi Ancient Citadels',
+    tags: ['Ruins', 'Bouldering', 'Heritage'],
+  },
+  {
+    id: 'munnar',
+    slug: 'munnar',
+    name: 'Munnar',
+    stateOrRegion: 'Kerala',
+    country: 'India',
+    countryCode: 'IN',
+    flag: '🇮🇳',
+    lat: 10.0889,
+    lng: 77.0595,
+    subtitle: 'Misty High-Altitude Tea Valleys & Western Ghats Peaks',
+    image: getAssetPath('/images/destinations/munnar_tea_hills.jpg'),
+    isAvailableInApp: true,
+    hiddenGemHighlight: 'Kolukkumalai Tea Sunrise & Marayoor Sandalwood Forests',
+    tags: ['Tea Hills', 'Clouds', 'Trekking'],
+  },
+  {
+    id: 'goa',
+    slug: 'goa',
+    name: 'Goa',
+    stateOrRegion: 'Goa',
+    country: 'India',
+    countryCode: 'IN',
+    flag: '🇮🇳',
+    lat: 15.2993,
+    lng: 74.124,
+    subtitle: 'Secluded Coastal Shores, Estuaries & Portuguese Chapels',
+    image: 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=800&q=80',
+    isAvailableInApp: true,
+    hiddenGemHighlight: 'Butterfly Secret Beach & Galgibaga Olive Ridley Sanctuary',
+    tags: ['Beaches', 'Portuguese Heritage', 'Estuaries'],
+  },
+  {
+    id: 'jaipur',
+    slug: 'jaipur',
+    name: 'Jaipur',
+    stateOrRegion: 'Rajasthan',
+    country: 'India',
+    countryCode: 'IN',
+    flag: '🇮🇳',
+    lat: 26.9124,
+    lng: 75.7873,
+    subtitle: 'Pink City Citadel Forts & Royal Astrological Observatories',
+    image: 'https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=800&q=80',
+    isAvailableInApp: true,
+    hiddenGemHighlight: 'Panna Meena Stepwell & Nahargarh Hidden Bastions',
+    tags: ['Forts', 'Stepwells', 'Royal History'],
+  },
+  {
+    id: 'varanasi',
+    slug: 'varanasi',
+    name: 'Varanasi',
+    stateOrRegion: 'Uttar Pradesh',
+    country: 'India',
+    countryCode: 'IN',
+    flag: '🇮🇳',
+    lat: 25.3176,
+    lng: 82.9739,
+    subtitle: 'Eternal Ganges Ghats, Morning Boat Aarti & Silk Alleys',
+    image: 'https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=800&q=80',
+    isAvailableInApp: true,
+    hiddenGemHighlight: 'Chunar Sandstone Fortress & Hidden Ashram Ghats',
+    tags: ['Ghats', 'Spirituality', 'Silk Heritage'],
+  },
+  {
+    id: 'hyderabad',
+    name: 'Hyderabad',
+    stateOrRegion: 'Telangana',
+    country: 'India',
+    countryCode: 'IN',
+    flag: '🇮🇳',
+    lat: 17.385,
+    lng: 78.4867,
+    subtitle: 'City of Pearls, Qutb Shahi Tombs & Golconda Fortress',
+    image: 'https://images.unsplash.com/photo-1605379399642-870262d3d051?auto=format&fit=crop&w=800&q=80',
+    isAvailableInApp: false,
+    hiddenGemHighlight: 'Gandikota Grand Canyon & Paigah Intricate Tombs',
+    tags: ['Heritage', 'Biryani', 'Palaces'],
+  },
+  {
+    id: 'bengaluru',
+    name: 'Bengaluru',
+    stateOrRegion: 'Karnataka',
+    country: 'India',
+    countryCode: 'IN',
+    flag: '🇮🇳',
+    lat: 12.9716,
+    lng: 77.5946,
+    subtitle: 'Garden City Ridges, Bannerghatta & Deccan Plateau',
+    image: 'https://images.unsplash.com/photo-1596176530529-78163a4f7af2?auto=format&fit=crop&w=800&q=80',
+    isAvailableInApp: false,
+    hiddenGemHighlight: 'Nandi Hills Dawn Trail & Shivagange Monolith Peak',
+    tags: ['Parks', 'Highlands', 'Plateau'],
+  },
+  {
+    id: 'chennai',
+    name: 'Chennai',
+    stateOrRegion: 'Tamil Nadu',
+    country: 'India',
+    countryCode: 'IN',
+    flag: '🇮🇳',
+    lat: 13.0827,
+    lng: 80.2707,
+    subtitle: 'Coromandel Coast, Classical Arts & Dravidian Sanctuaries',
+    image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=800&q=80',
+    isAvailableInApp: false,
+    hiddenGemHighlight: 'Mahabalipuram Monolith Shore Temples & Pulicat Lagoon',
+    tags: ['Coast', 'Dravidian Temples', 'Flamingos'],
+  },
+  {
+    id: 'delhi',
+    name: 'Delhi',
+    stateOrRegion: 'NCR',
+    country: 'India',
+    countryCode: 'IN',
+    flag: '🇮🇳',
+    lat: 28.6139,
+    lng: 77.209,
+    subtitle: 'Historic Imperial Capital, Mughal Citadels & Baolis',
+    image: 'https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=800&q=80',
+    isAvailableInApp: false,
+    hiddenGemHighlight: 'Mehrauli Archaeological Forest & Agrasen ki Baoli',
+    tags: ['History', 'Stepwells', 'Mughal Architecture'],
+  },
+  {
+    id: 'mumbai',
+    name: 'Mumbai',
+    stateOrRegion: 'Maharashtra',
+    country: 'India',
+    countryCode: 'IN',
+    flag: '🇮🇳',
+    lat: 19.076,
+    lng: 72.8777,
+    subtitle: 'Arabian Sea Shorelines, Victorian Gothic & Coastal Forts',
+    image: 'https://images.unsplash.com/photo-1570168007204-dfb528c6958f?auto=format&fit=crop&w=800&q=80',
+    isAvailableInApp: false,
+    hiddenGemHighlight: 'Kanheri Basalt Rock Caves & Banganga Sacred Tank',
+    tags: ['Coastal', 'Rock Caves', 'Harbour'],
+  },
+
+  // INTERNATIONAL DESTINATIONS
+  {
+    id: 'tokyo',
+    name: 'Tokyo',
+    stateOrRegion: 'Kanto',
+    country: 'Japan',
+    countryCode: 'JP',
+    flag: '🇯🇵',
+    lat: 35.6762,
+    lng: 139.6503,
+    subtitle: 'Futuristic Megacity, Ancient Shinto Shrines & Cherry Blossoms',
+    image: 'https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=800&q=80',
+    isAvailableInApp: false,
+    hiddenGemHighlight: 'Yanaka Edo-Era Old Quarter & Todoroki Bamboo Ravine',
+    tags: ['Culture', 'Edo Heritage', 'Bamboo Gardens'],
+  },
+  {
+    id: 'kyoto',
+    name: 'Kyoto',
+    stateOrRegion: 'Kansai',
+    country: 'Japan',
+    countryCode: 'JP',
+    flag: '🇯🇵',
+    lat: 35.0116,
+    lng: 135.7681,
+    subtitle: 'Ancient Imperial Capital, Thousand Pagodas & Bamboo Groves',
+    image: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=800&q=80',
+    isAvailableInApp: false,
+    hiddenGemHighlight: 'Kurama-Kibune Cedar Mountain Path & Otagi 1,200 Statues',
+    tags: ['Zen Temples', 'Mountains', 'Forests'],
+  },
+  {
+    id: 'paris',
+    name: 'Paris',
+    stateOrRegion: 'Île-de-France',
+    country: 'France',
+    countryCode: 'FR',
+    flag: '🇫🇷',
+    lat: 48.8566,
+    lng: 2.3522,
+    subtitle: 'City of Lights, Historic Louvre & Romantic Seine Riverbanks',
+    image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=800&q=80',
+    isAvailableInApp: false,
+    hiddenGemHighlight: 'Coulée Verte Elevated Garden Promenade & Canal Saint-Martin',
+    tags: ['Architecture', 'Seine', 'Gardens'],
+  },
+  {
+    id: 'new-york',
+    name: 'New York City',
+    stateOrRegion: 'New York',
+    country: 'United States',
+    countryCode: 'US',
+    flag: '🇺🇸',
+    lat: 40.7128,
+    lng: -74.006,
+    subtitle: 'Iconic Global Metropolis, Broadway & Central Park Vistas',
+    image: 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=800&q=80',
+    isAvailableInApp: false,
+    hiddenGemHighlight: 'The Cloisters Medieval Monastery & Roosevelt Island Tram',
+    tags: ['Skyline', 'Metropolis', 'Parks'],
+  },
+  {
+    id: 'san-francisco',
+    name: 'San Francisco',
+    stateOrRegion: 'California',
+    country: 'United States',
+    countryCode: 'US',
+    flag: '🇺🇸',
+    lat: 37.7749,
+    lng: -122.4194,
+    subtitle: 'Golden Gate Mist, Historic Cable Cars & Pacific Coast',
+    image: 'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=800&q=80',
+    isAvailableInApp: false,
+    hiddenGemHighlight: 'Muir Beach Overlook & Marin Headlands Secret Battery',
+    tags: ['Pacific Coast', 'Bridges', 'Redwoods'],
+  },
+  {
+    id: 'grand-canyon',
+    name: 'Grand Canyon',
+    stateOrRegion: 'Arizona',
+    country: 'United States',
+    countryCode: 'US',
+    flag: '🇺🇸',
+    lat: 36.1069,
+    lng: -112.1129,
+    subtitle: 'Breathtaking 1-Mile Deep Colorado River Geological Chasm',
+    image: 'https://images.unsplash.com/photo-1474044159687-1ee9f3a51722?auto=format&fit=crop&w=800&q=80',
+    isAvailableInApp: false,
+    hiddenGemHighlight: 'Havasu Blue-Green Falls & Hermit Creek Rapids',
+    tags: ['Canyons', 'Geology', 'Wilderness'],
+  },
+  {
+    id: 'sydney',
+    name: 'Sydney',
+    stateOrRegion: 'New South Wales',
+    country: 'Australia',
+    countryCode: 'AU',
+    flag: '🇦🇺',
+    lat: -33.8688,
+    lng: 151.2093,
+    subtitle: 'Iconic Harbour Opera House, Bondi Surf & Pacific Bays',
+    image: 'https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?auto=format&fit=crop&w=800&q=80',
+    isAvailableInApp: false,
+    hiddenGemHighlight: 'Hermitage Foreshore Coastal Track & Milk Beach Secret Cove',
+    tags: ['Harbour', 'Surfing', 'Coastlines'],
+  },
+  {
+    id: 'rio-de-janeiro',
+    name: 'Rio de Janeiro',
+    stateOrRegion: 'Rio de Janeiro',
+    country: 'Brazil',
+    countryCode: 'BR',
+    flag: '🇧🇷',
+    lat: -22.9068,
+    lng: -43.1729,
+    subtitle: 'Dramatic Granite Sugarloaf Peaks, Copacabana & Rainforest',
+    image: 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?auto=format&fit=crop&w=800&q=80',
+    isAvailableInApp: false,
+    hiddenGemHighlight: 'Parque Lage Jungle Mansion & Pedra Bonita Hang-glider View',
+    tags: ['Rainforest', 'Atlantic Coast', 'Granite Peaks'],
+  },
+  {
+    id: 'cairo',
+    name: 'Cairo & Giza',
+    stateOrRegion: 'Giza',
+    country: 'Egypt',
+    countryCode: 'EG',
+    flag: '🇪🇬',
+    lat: 29.9792,
+    lng: 31.1342,
+    subtitle: 'Great Pyramids of Giza, Nile Feluccas & Ancient Pharaohs',
+    image: 'https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?auto=format&fit=crop&w=800&q=80',
+    isAvailableInApp: false,
+    hiddenGemHighlight: 'Dahshur Red Pyramid & Meidum Solitary Necropolis',
+    tags: ['Pyramids', 'Nile River', 'Antiquity'],
+  },
+];
 
 interface WorldExplorerMapProps {
   onSelectDestination: (slug: string) => void;
@@ -33,337 +359,407 @@ export function WorldExplorerMap({
   onSelectDestination,
   selectedDestinationSlug,
 }: WorldExplorerMapProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const dragStartRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
-  const hasMovedRef = useRef<boolean>(false);
-  const touchDistRef = useRef<number | null>(null);
+  const mapContainerRef = useRef<HTMLDivElement>(null);
+  const mapInstanceRef = useRef<any>(null);
+  const markersRef = useRef<Record<string, any>>({});
+  const leafletRef = useRef<any>(null);
 
-  const [selectedCountryCode, setSelectedCountryCode] = useState<string>('IN');
-  const [activeStateTab, setActiveStateTab] = useState<string>('All');
-  const [hoveredCountry, setHoveredCountry] = useState<string | null>(null);
-  const [hoveredPin, setHoveredPin] = useState<WorldDestination | null>(null);
-  const [selectedPinSlug, setSelectedPinSlug] = useState<string | null>(selectedDestinationSlug || null);
+  const [mapLoaded, setMapLoaded] = useState(false);
+  const [currentZoom, setCurrentZoom] = useState<number>(4);
+  const [selectedDestId, setSelectedDestId] = useState<string>(
+    selectedDestinationSlug || 'hampi'
+  );
+  const [hoveredDest, setHoveredDest] = useState<MapDestination | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [isPanelCollapsed, setIsPanelCollapsed] = useState(false);
+  const [activeRegionFilter, setActiveRegionFilter] = useState<string>('All');
 
-  // Pan & Zoom state
-  const [zoom, setZoom] = useState<number>(1);
-  const [pan, setPan] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
-  const [isDragging, setIsDragging] = useState<boolean>(false);
+  // Currently selected destination object
+  const activeDestination: MapDestination = useMemo(() => {
+    return (
+      REAL_WORLD_DESTINATIONS.find(
+        (d) => d.id === selectedDestId || d.slug === selectedDestId
+      ) || REAL_WORLD_DESTINATIONS[1] // Default to Hampi
+    );
+  }, [selectedDestId]);
 
-  const activeCountry: CountryData = WORLD_COUNTRIES[selectedCountryCode] || WORLD_COUNTRIES.IN;
-
-  // Clamping function to prevent the map from ever disappearing or getting stuck
-  const clampPan = useCallback((x: number, y: number, currentZoom: number) => {
-    const el = containerRef.current;
-    const width = el ? el.clientWidth : 1000;
-    const height = el ? el.clientHeight : 580;
-
-    // Expand allowable bounds as zoom increases
-    const maxPanX = Math.max(120, (width * (currentZoom - 0.75)) / 2 + 160);
-    const maxPanY = Math.max(90, (height * (currentZoom - 0.75)) / 2 + 100);
-
-    return {
-      x: Math.max(-maxPanX, Math.min(maxPanX, x)),
-      y: Math.max(-maxPanY, Math.min(maxPanY, y)),
-    };
-  }, []);
-
-  // Center smoothly on coordinates { xPercent, yPercent }
-  const focusOnCoordinates = useCallback(
-    (xPercent: number, yPercent: number, targetZoom: number) => {
-      const el = containerRef.current;
-      const width = el ? el.clientWidth : 1000;
-      const height = el ? el.clientHeight : 580;
-
-      // Calculate translation to bring target (xPercent, yPercent) to the viewport center (50%, 50%)
-      const targetPanX = (50 - xPercent) * (width / 100) * (targetZoom / 1.55);
-      const targetPanY = (50 - yPercent) * (height / 100) * (targetZoom / 1.55);
-
-      setZoom(targetZoom);
-      setPan(clampPan(targetPanX, targetPanY, targetZoom));
-    },
-    [clampPan]
-  );
-
-  // Zoom into a selected country
-  const handleSelectCountry = useCallback(
-    (countryCode: string) => {
-      const country = WORLD_COUNTRIES[countryCode];
-      if (country) {
-        setSelectedCountryCode(countryCode);
-        setActiveStateTab('All');
-        setSelectedPinSlug(null);
-        setIsPanelCollapsed(false);
-
-        const targetZoom = Math.min(3.4, Math.max(1.8, country.zoomLevel));
-        focusOnCoordinates(
-          country.centerCoordinates.xPercent,
-          country.centerCoordinates.yPercent,
-          targetZoom
-        );
-      }
-    },
-    [focusOnCoordinates]
-  );
-
-  // Reset View to initial world center
-  const handleResetView = useCallback(() => {
-    setSelectedCountryCode('IN');
-    setSelectedPinSlug(null);
-    setSearchQuery('');
-    setActiveStateTab('All');
-    setZoom(1);
-    setPan({ x: 0, y: 0 });
-  }, []);
-
-  // Zoom controls
-  const handleZoomIn = () => {
-    setZoom((prev) => {
-      const next = Math.min(4.5, +(prev + 0.35).toFixed(2));
-      setPan((p) => clampPan(p.x, p.y, next));
-      return next;
-    });
-  };
-
-  const handleZoomOut = () => {
-    setZoom((prev) => {
-      const next = Math.max(0.85, +(prev - 0.35).toFixed(2));
-      setPan((p) => clampPan(p.x, p.y, next));
-      return next;
-    });
-  };
-
-  // Select specific destination marker
-  const handleSelectMarker = (dest: WorldDestination) => {
-    setSelectedPinSlug(dest.slug || dest.id);
-    setIsPanelCollapsed(false);
-    focusOnCoordinates(dest.coordinates.xPercent, dest.coordinates.yPercent, Math.max(2.6, zoom));
-
-    if (dest.slug) {
-      onSelectDestination(dest.slug);
-    }
-  };
-
-  // Mouse wheel zoom toward cursor
+  // Sync external prop updates
   useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-
-    const handleWheel = (e: WheelEvent) => {
-      e.preventDefault();
-      const zoomFactor = e.deltaY < 0 ? 1.15 : 0.87;
-
-      setZoom((prevZoom) => {
-        const nextZoom = Math.min(4.5, Math.max(0.85, +(prevZoom * zoomFactor).toFixed(2)));
-        const rect = el.getBoundingClientRect();
-        const cursorX = e.clientX - rect.left - rect.width / 2;
-        const cursorY = e.clientY - rect.top - rect.height / 2;
-
-        setPan((prevPan) => {
-          const scaleChange = nextZoom / prevZoom;
-          const newX = cursorX - (cursorX - prevPan.x) * scaleChange;
-          const newY = cursorY - (cursorY - prevPan.y) * scaleChange;
-          return clampPan(newX, newY, nextZoom);
+    if (selectedDestinationSlug) {
+      setSelectedDestId(selectedDestinationSlug);
+      // If map is already loaded, fly to destination
+      const found = REAL_WORLD_DESTINATIONS.find(
+        (d) => d.slug === selectedDestinationSlug || d.id === selectedDestinationSlug
+      );
+      if (found && mapInstanceRef.current) {
+        mapInstanceRef.current.flyTo([found.lat, found.lng], 8, {
+          duration: 1.2,
         });
-
-        return nextZoom;
-      });
-    };
-
-    el.addEventListener('wheel', handleWheel, { passive: false });
-    return () => el.removeEventListener('wheel', handleWheel);
-  }, [clampPan]);
-
-  // Pointer drag events
-  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (e.button !== 0 && e.pointerType === 'mouse') return;
-    if ((e.target as HTMLElement).closest('button, input, select, .no-drag')) return;
-
-    setIsDragging(true);
-    hasMovedRef.current = false;
-    dragStartRef.current = {
-      x: e.clientX - pan.x,
-      y: e.clientY - pan.y,
-    };
-
-    try {
-      e.currentTarget.setPointerCapture(e.pointerId);
-    } catch {}
-  };
-
-  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (!isDragging) return;
-
-    const dx = Math.abs(e.clientX - (dragStartRef.current.x + pan.x));
-    const dy = Math.abs(e.clientY - (dragStartRef.current.y + pan.y));
-    if (dx > 4 || dy > 4) {
-      hasMovedRef.current = true;
+      }
     }
+  }, [selectedDestinationSlug]);
 
-    const nextX = e.clientX - dragStartRef.current.x;
-    const nextY = e.clientY - dragStartRef.current.y;
-    setPan(clampPan(nextX, nextY, zoom));
-  };
-
-  const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
-    setIsDragging(false);
-    try {
-      e.currentTarget.releasePointerCapture(e.pointerId);
-    } catch {}
-  };
-
-  // Mobile pinch-to-zoom
-  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
-    if (e.touches.length === 2) {
-      touchDistRef.current = Math.hypot(
-        e.touches[0].clientX - e.touches[1].clientX,
-        e.touches[0].clientY - e.touches[1].clientY
-      );
-    }
-  };
-
-  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-    if (e.touches.length === 2 && touchDistRef.current !== null) {
-      const dist = Math.hypot(
-        e.touches[0].clientX - e.touches[1].clientX,
-        e.touches[0].clientY - e.touches[1].clientY
-      );
-      const delta = (dist - touchDistRef.current) / 180;
-      touchDistRef.current = dist;
-      setZoom((z) => {
-        const next = Math.min(4.5, Math.max(0.85, +(z + delta).toFixed(2)));
-        setPan((p) => clampPan(p.x, p.y, next));
-        return next;
-      });
-    }
-  };
-
-  const handleTouchEnd = () => {
-    touchDistRef.current = null;
-  };
-
-  // Filtered destinations in floating panel
-  const displayedDestinations = useMemo(() => {
-    let list = activeCountry.destinations;
-    if (activeCountry.states && activeStateTab !== 'All') {
-      const stateObj = activeCountry.states.find((s) => s.name === activeStateTab);
-      if (stateObj) list = stateObj.destinations;
-    }
-    return list;
-  }, [activeCountry, activeStateTab]);
-
-  // Real-time search suggestions
+  // Search filter options
   const searchSuggestions = useMemo(() => {
-    const q = searchQuery.trim().toLowerCase();
-    if (!q || q.length < 2) return [];
-
-    const matches: Array<{
-      type: 'country' | 'destination';
-      title: string;
-      subtitle: string;
-      icon: string;
-      countryCode: string;
-      destSlug?: string;
-      coordinates: { xPercent: number; yPercent: number };
-    }> = [];
-
-    // Country matches
-    for (const [code, c] of Object.entries(WORLD_COUNTRIES)) {
-      if (c.name.toLowerCase().includes(q) || c.continent.toLowerCase().includes(q)) {
-        matches.push({
-          type: 'country',
-          title: c.name,
-          subtitle: `${c.continent} • ${c.destinations.length} Curated Destinations`,
-          icon: c.flag,
-          countryCode: code,
-          coordinates: c.centerCoordinates,
-        });
-      }
-
-      // Destination matches
-      for (const dest of c.destinations) {
-        if (
-          dest.name.toLowerCase().includes(q) ||
-          dest.stateOrRegion.toLowerCase().includes(q) ||
-          dest.subtitle.toLowerCase().includes(q)
-        ) {
-          matches.push({
-            type: 'destination',
-            title: dest.name,
-            subtitle: `${dest.stateOrRegion}, ${c.name}`,
-            icon: dest.icon,
-            countryCode: code,
-            destSlug: dest.slug,
-            coordinates: dest.coordinates,
-          });
-        }
-      }
-    }
-
-    return matches.slice(0, 6);
+    if (!searchQuery.trim()) return [];
+    const q = searchQuery.toLowerCase().trim();
+    return REAL_WORLD_DESTINATIONS.filter(
+      (d) =>
+        d.name.toLowerCase().includes(q) ||
+        d.stateOrRegion.toLowerCase().includes(q) ||
+        d.country.toLowerCase().includes(q)
+    ).slice(0, 6);
   }, [searchQuery]);
 
-  // Handle Search submit
+  // Initialize Real Geographic Leaflet Map
+  useEffect(() => {
+    if (typeof window === 'undefined' || !mapContainerRef.current) return;
+
+    let isMounted = true;
+
+    // Dynamically load leaflet client-side to prevent SSR issues
+    Promise.all([
+      import('leaflet'),
+      import('leaflet/dist/leaflet.css' as any),
+    ])
+      .then(([leafletModule]) => {
+        if (!isMounted || !mapContainerRef.current) return;
+        const L = leafletModule.default || leafletModule;
+        leafletRef.current = L;
+
+        // Clean up any existing map instance
+        if (mapInstanceRef.current) {
+          mapInstanceRef.current.remove();
+        }
+
+        // Center on India & Eurasia by default
+        const initialLat = 20.5937;
+        const initialLng = 78.9629;
+        const initialZoom = 4;
+
+        const map = L.map(mapContainerRef.current, {
+          center: [initialLat, initialLng],
+          zoom: initialZoom,
+          minZoom: 2,
+          maxZoom: 18,
+          zoomControl: false, // Using our custom sleek HiddenGem UI controls
+          attributionControl: true,
+          worldCopyJump: true,
+          scrollWheelZoom: true,
+        });
+
+        mapInstanceRef.current = map;
+
+        // Realistic Dark Base Map (CartoDB Dark Matter)
+        // Shows real coastlines, real borders, oceans, cities, and road networks
+        const cartoLayer = L.tileLayer(
+          'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+          {
+            attribution:
+              '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+            subdomains: 'abcd',
+            maxZoom: 19,
+          }
+        );
+
+        cartoLayer.addTo(map);
+
+        // Fallback tile layer if needed
+        cartoLayer.on('tileerror', () => {
+          // graceful fallback to standard OSM if dark matter network stalls
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+          }).addTo(map);
+        });
+
+        // Track zoom level changes for control widget
+        map.on('zoomend', () => {
+          setCurrentZoom(map.getZoom());
+        });
+
+        // Add Destination Markers
+        const markers: Record<string, any> = {};
+
+        REAL_WORLD_DESTINATIONS.forEach((dest) => {
+          const isSelected =
+            dest.id === selectedDestId || dest.slug === selectedDestId;
+
+          // Custom DivIcon with glowing neon emerald aesthetic
+          const icon = L.divIcon({
+            className: 'custom-hiddengem-div-marker',
+            html: `
+              <div class="group cursor-pointer select-none" style="transform: translate(-50%, -50%);">
+                <div style="
+                  display: flex;
+                  align-items: center;
+                  gap: 5px;
+                  background: ${isSelected ? '#047857' : 'rgba(10, 15, 20, 0.92)'};
+                  color: #ffffff;
+                  border: 1.5px solid ${isSelected ? '#34d399' : 'rgba(52, 211, 153, 0.55)'};
+                  padding: ${isSelected ? '5px 12px' : '4px 9px'};
+                  border-radius: 9999px;
+                  font-size: 11px;
+                  font-weight: 800;
+                  box-shadow: ${
+                    isSelected
+                      ? '0 0 20px rgba(52, 211, 153, 0.8), 0 4px 12px rgba(0,0,0,0.8)'
+                      : '0 4px 12px rgba(0,0,0,0.6), 0 0 10px rgba(16, 185, 129, 0.3)'
+                  };
+                  backdrop-filter: blur(8px);
+                  white-space: nowrap;
+                  transition: all 0.25s ease;
+                ">
+                  <span style="font-size: 12px;">💎</span>
+                  <span>${dest.name}</span>
+                </div>
+              </div>
+            `,
+            iconSize: [120, 32],
+            iconAnchor: [60, 16],
+          });
+
+          const marker = L.marker([dest.lat, dest.lng], { icon }).addTo(map);
+
+          // Rich Tooltip on Hover
+          marker.bindTooltip(
+            `
+            <div style="font-family: inherit; font-size: 11px; line-height: 1.3;">
+              <div style="font-weight: 900; color: #34d399; display: flex; align-items: center; gap: 4px;">
+                <span>${dest.flag}</span>
+                <span>${dest.name}</span>
+              </div>
+              <div style="color: #d6d3d1; font-size: 10px;">${dest.stateOrRegion}, ${dest.country}</div>
+              <div style="color: #a7f3d0; font-size: 9px; font-weight: 700; margin-top: 2px;">
+                ${dest.isAvailableInApp ? '✓ Full AI Itinerary' : 'Global Discovery'}
+              </div>
+            </div>
+            `,
+            {
+              className: 'hiddengem-leaflet-tooltip',
+              direction: 'top',
+              offset: [0, -14],
+              opacity: 0.98,
+            }
+          );
+
+          // Hover handlers
+          marker.on('mouseover', () => {
+            setHoveredDest(dest);
+          });
+          marker.on('mouseout', () => {
+            setHoveredDest(null);
+          });
+
+          // Click handler
+          marker.on('click', () => {
+            handleSelectMarker(dest);
+          });
+
+          markers[dest.id] = marker;
+        });
+
+        markersRef.current = markers;
+        setMapLoaded(true);
+      })
+      .catch((err) => {
+        console.error('Failed to load Leaflet:', err);
+      });
+
+    return () => {
+      isMounted = false;
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.remove();
+        mapInstanceRef.current = null;
+      }
+    };
+  }, []);
+
+  // Update marker styles when selected destination changes
+  useEffect(() => {
+    if (!leafletRef.current || !mapLoaded) return;
+    const L = leafletRef.current;
+
+    REAL_WORLD_DESTINATIONS.forEach((dest) => {
+      const marker = markersRef.current[dest.id];
+      if (!marker) return;
+
+      const isSelected =
+        dest.id === selectedDestId || dest.slug === selectedDestId;
+
+      const newIcon = L.divIcon({
+        className: 'custom-hiddengem-div-marker',
+        html: `
+          <div class="group cursor-pointer select-none" style="transform: translate(-50%, -50%);">
+            <div style="
+              display: flex;
+              align-items: center;
+              gap: 5px;
+              background: ${isSelected ? '#047857' : 'rgba(10, 15, 20, 0.92)'};
+              color: #ffffff;
+              border: 1.5px solid ${isSelected ? '#34d399' : 'rgba(52, 211, 153, 0.55)'};
+              padding: ${isSelected ? '5px 12px' : '4px 9px'};
+              border-radius: 9999px;
+              font-size: 11px;
+              font-weight: 800;
+              box-shadow: ${
+                isSelected
+                  ? '0 0 22px rgba(52, 211, 153, 0.85), 0 4px 12px rgba(0,0,0,0.8)'
+                  : '0 4px 12px rgba(0,0,0,0.6), 0 0 10px rgba(16, 185, 129, 0.3)'
+              };
+              backdrop-filter: blur(8px);
+              white-space: nowrap;
+              transition: all 0.25s ease;
+            ">
+              <span style="font-size: 12px;">💎</span>
+              <span>${dest.name}</span>
+            </div>
+          </div>
+        `,
+        iconSize: [120, 32],
+        iconAnchor: [60, 16],
+      });
+
+      marker.setIcon(newIcon);
+    });
+  }, [selectedDestId, mapLoaded]);
+
+  // Select marker and smoothly flyTo
+  const handleSelectMarker = useCallback(
+    (dest: MapDestination) => {
+      setSelectedDestId(dest.id);
+      setIsPanelCollapsed(false);
+
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.flyTo([dest.lat, dest.lng], 9, {
+          duration: 1.2,
+        });
+      }
+
+      if (dest.slug) {
+        onSelectDestination(dest.slug);
+      }
+    },
+    [onSelectDestination]
+  );
+
+  // Zoom In Control (+)
+  const handleZoomIn = () => {
+    if (mapInstanceRef.current) {
+      mapInstanceRef.current.zoomIn();
+    }
+  };
+
+  // Zoom Out Control (−)
+  const handleZoomOut = () => {
+    if (mapInstanceRef.current) {
+      mapInstanceRef.current.zoomOut();
+    }
+  };
+
+  // Reset View Control (⌂)
+  const handleResetView = () => {
+    if (mapInstanceRef.current) {
+      mapInstanceRef.current.flyTo([20.5937, 78.9629], 4, {
+        duration: 1.4,
+      });
+    }
+    setActiveRegionFilter('All');
+  };
+
+  // Search handler (e.g. "Hampi", "India", "Japan")
   const handleSearchSubmit = (e?: React.FormEvent) => {
     if (e) e.preventDefault();
-    const query = searchQuery.trim().toLowerCase();
-    if (!query) return;
+    if (!searchQuery.trim() || !mapInstanceRef.current) return;
 
-    setIsSearchFocused(false);
+    const q = searchQuery.toLowerCase().trim();
 
-    // Exact or partial match check
-    for (const [code, country] of Object.entries(WORLD_COUNTRIES)) {
-      // 1. Check destination name first
-      for (const dest of country.destinations) {
-        if (
-          dest.name.toLowerCase().includes(query) ||
-          query.includes(dest.name.toLowerCase()) ||
-          dest.stateOrRegion.toLowerCase().includes(query)
-        ) {
-          setSelectedCountryCode(code);
-          setSelectedPinSlug(dest.slug || dest.id);
-          setIsPanelCollapsed(false);
-          focusOnCoordinates(dest.coordinates.xPercent, dest.coordinates.yPercent, 2.8);
-          if (dest.slug) onSelectDestination(dest.slug);
-          return;
-        }
-      }
+    // 1. Direct Country Search
+    if (q === 'india') {
+      mapInstanceRef.current.flyTo([20.5937, 78.9629], 5, { duration: 1.4 });
+      setSearchQuery('');
+      setIsSearchFocused(false);
+      return;
+    }
+    if (q === 'japan') {
+      mapInstanceRef.current.flyTo([36.2048, 138.2529], 6, { duration: 1.4 });
+      setSearchQuery('');
+      setIsSearchFocused(false);
+      return;
+    }
+    if (q === 'france') {
+      mapInstanceRef.current.flyTo([46.2276, 2.2137], 6, { duration: 1.4 });
+      setSearchQuery('');
+      setIsSearchFocused(false);
+      return;
+    }
+    if (q === 'united states' || q === 'usa' || q === 'america') {
+      mapInstanceRef.current.flyTo([37.0902, -95.7129], 4, { duration: 1.4 });
+      setSearchQuery('');
+      setIsSearchFocused(false);
+      return;
+    }
 
-      // 2. Check country name
-      if (
-        country.name.toLowerCase().includes(query) ||
-        query.includes(country.name.toLowerCase()) ||
-        country.continent.toLowerCase().includes(query)
-      ) {
-        handleSelectCountry(code);
-        return;
-      }
+    // 2. Destination Search
+    const match = REAL_WORLD_DESTINATIONS.find(
+      (d) =>
+        d.name.toLowerCase().includes(q) ||
+        d.stateOrRegion.toLowerCase().includes(q) ||
+        d.country.toLowerCase().includes(q)
+    );
+
+    if (match) {
+      handleSelectMarker(match);
+      setSearchQuery('');
+      setIsSearchFocused(false);
+    }
+  };
+
+  // Region Filter Pills
+  const handleSelectRegion = (region: string) => {
+    setActiveRegionFilter(region);
+    if (!mapInstanceRef.current) return;
+
+    switch (region) {
+      case 'All':
+        mapInstanceRef.current.flyTo([20.5937, 78.9629], 3.5, { duration: 1.4 });
+        break;
+      case 'India':
+        mapInstanceRef.current.flyTo([19.5, 78.8], 5, { duration: 1.2 });
+        break;
+      case 'East Asia':
+        mapInstanceRef.current.flyTo([35.6, 137.0], 6, { duration: 1.2 });
+        break;
+      case 'Europe':
+        mapInstanceRef.current.flyTo([48.0, 4.0], 5, { duration: 1.2 });
+        break;
+      case 'Americas':
+        mapInstanceRef.current.flyTo([37.0, -98.0], 4, { duration: 1.4 });
+        break;
     }
   };
 
   return (
-    <div className="relative w-full rounded-3xl overflow-hidden border border-white/20 bg-stone-950 shadow-2xl select-none">
+    <div className="w-full space-y-4">
       {/* ========================================================
-          1. TOP CONTROL BAR & SEARCH WITH AUTO-SUGGEST
+          1. HEADER & SEARCH BAR
       ======================================================== */}
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 px-5 py-3.5 bg-stone-900/90 border-b border-white/10 backdrop-blur-md z-30 relative">
-        <div className="flex items-center gap-2.5">
-          <span className="p-2 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-            <Globe2 className="w-4 h-4" />
-          </span>
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 rounded-3xl bg-stone-950/80 backdrop-blur-2xl border border-white/15 shadow-xl text-white">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-2xl bg-emerald-600/30 border border-emerald-400/40 flex items-center justify-center text-emerald-300">
+            <Globe2 className="w-5 h-5 text-emerald-400" />
+          </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-xs uppercase font-extrabold tracking-wider text-emerald-400">
-                Interactive World Map
+              <span className="text-xs uppercase font-black tracking-widest text-emerald-400">
+                Interactive World GIS Map
               </span>
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-600/20 text-emerald-300 border border-emerald-500/30">
-                Drag • Zoom • Discover
+              <span className="px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
+                Live Real-World Geography
               </span>
             </div>
-            <p className="text-[11px] text-stone-400">
-              Drag anywhere to pan • Scroll wheel or pinch to zoom • Click countries &amp; gems
+            <p className="text-[11px] text-stone-300">
+              Real coastlines, borders &amp; uncrowded destinations • Drag to pan • Scroll to zoom
             </p>
           </div>
         </div>
@@ -378,7 +774,7 @@ export function WorldExplorerMap({
               onFocus={() => setIsSearchFocused(true)}
               onBlur={() => setTimeout(() => setIsSearchFocused(false), 220)}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-8 py-2 rounded-xl bg-stone-950/90 border border-white/15 text-xs text-white placeholder-stone-400 focus:outline-none focus:border-emerald-500 shadow-inner"
+              className="w-full pl-9 pr-8 py-2 rounded-xl bg-stone-900/95 border border-white/20 text-xs text-white placeholder:text-stone-400 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/40 shadow-inner font-medium"
             />
             <Search className="w-3.5 h-3.5 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2" />
             {searchQuery && (
@@ -393,394 +789,87 @@ export function WorldExplorerMap({
           </form>
 
           {/* Autocomplete suggestions dropdown */}
-          <AnimatePresence>
-            {isSearchFocused && searchSuggestions.length > 0 && (
-              <motion.div
-                initial={{ opacity: 0, y: -6 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -6 }}
-                className="absolute top-full left-0 right-0 mt-1.5 bg-stone-900/98 backdrop-blur-2xl border border-white/20 rounded-2xl shadow-2xl overflow-hidden z-50 divide-y divide-white/5"
-              >
-                {searchSuggestions.map((s, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    onMouseDown={() => {
-                      if (s.type === 'destination') {
-                        setSelectedCountryCode(s.countryCode);
-                        setSelectedPinSlug(s.destSlug || null);
-                        setIsPanelCollapsed(false);
-                        focusOnCoordinates(s.coordinates.xPercent, s.coordinates.yPercent, 2.8);
-                        if (s.destSlug) onSelectDestination(s.destSlug);
-                      } else {
-                        handleSelectCountry(s.countryCode);
-                      }
-                      setSearchQuery(s.title);
-                      setIsSearchFocused(false);
-                    }}
-                    className="w-full px-3.5 py-2.5 text-left flex items-center justify-between hover:bg-emerald-950/40 transition-colors group"
-                  >
-                    <div className="flex items-center gap-2.5">
-                      <span className="text-base">{s.icon}</span>
-                      <div>
-                        <div className="text-xs font-bold text-white group-hover:text-emerald-400 transition-colors">
-                          {s.title}
-                        </div>
-                        <div className="text-[10px] text-stone-400">{s.subtitle}</div>
-                      </div>
+          {isSearchFocused && searchSuggestions.length > 0 && (
+            <div className="absolute top-full left-0 right-0 mt-1.5 rounded-2xl bg-stone-950/98 backdrop-blur-2xl border border-white/20 shadow-2xl overflow-hidden z-50 divide-y divide-white/10">
+              {searchSuggestions.map((dest) => (
+                <button
+                  key={dest.id}
+                  type="button"
+                  onMouseDown={() => {
+                    handleSelectMarker(dest);
+                    setSearchQuery('');
+                  }}
+                  className="w-full px-3.5 py-2.5 text-left flex items-center justify-between hover:bg-emerald-950/40 transition-colors"
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="text-base">{dest.flag}</span>
+                    <div>
+                      <span className="text-xs font-bold text-white block">
+                        {dest.name}
+                      </span>
+                      <span className="text-[10px] text-stone-400">
+                        {dest.stateOrRegion}, {dest.country}
+                      </span>
                     </div>
-                    <ArrowRight className="w-3 h-3 text-stone-500 group-hover:text-emerald-400 transition-colors" />
-                  </button>
-                ))}
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-
-        {/* Quick View Switcher & Panel Toggle */}
-        <div className="flex items-center gap-2 self-end sm:self-center">
-          <button
-            type="button"
-            onClick={() => setIsPanelCollapsed((prev) => !prev)}
-            className="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-stone-300 hover:text-white border border-white/10 text-xs font-bold transition-all flex items-center gap-1.5"
-            title={isPanelCollapsed ? 'Show Destination Panel' : 'Hide Destination Panel'}
-          >
-            <span>{isPanelCollapsed ? 'Show Panel' : 'Hide Panel'}</span>
-            {isPanelCollapsed ? <ChevronDown className="w-3.5 h-3.5" /> : <ChevronUp className="w-3.5 h-3.5" />}
-          </button>
+                  </div>
+                  <span className="text-[10px] text-emerald-400 font-bold flex items-center gap-1">
+                    Fly to <ArrowRight className="w-3 h-3" />
+                  </span>
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
-      {/* ========================================================
-          2. MAIN INTERACTIVE MAP VIEWPORT
-      ======================================================== */}
-      <div
-        ref={containerRef}
-        onPointerDown={handlePointerDown}
-        onPointerMove={handlePointerMove}
-        onPointerUp={handlePointerUp}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-        style={{
-          touchAction: 'none',
-          cursor: isDragging ? 'grabbing' : 'grab',
-        }}
-        className="relative w-full h-[520px] sm:h-[580px] lg:h-[640px] overflow-hidden bg-gradient-to-b from-stone-950 via-[#0a1118] to-stone-950"
-      >
-        {/* Geospatial Coordinate Grid Lines */}
-        <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-20">
-          <defs>
-            <pattern id="world-gis-grid" width="80" height="80" patternUnits="userSpaceOnUse">
-              <path d="M 80 0 L 0 0 0 80" fill="none" stroke="#10b981" strokeWidth="0.6" strokeDasharray="3 3" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#world-gis-grid)" />
-        </svg>
-
-        {/* Dynamic Zoom & Pan Transform Canvas Layer */}
-        <motion.div
-          animate={{
-            scale: zoom,
-            x: pan.x,
-            y: pan.y,
-          }}
-          transition={{
-            type: isDragging ? false : 'spring',
-            stiffness: 260,
-            damping: 32,
-          }}
-          className="relative w-full h-full origin-center"
-        >
-          {/* Detailed SVG World Landmasses with interactive Country Nodes */}
-          <svg
-            viewBox="0 0 1000 500"
-            className="w-full h-full drop-shadow-2xl"
-            style={{ filter: 'drop-shadow(0 0 40px rgba(16, 185, 129, 0.08))' }}
+      {/* Region quick-jump pills */}
+      <div className="flex items-center gap-2 overflow-x-auto pb-1 text-xs">
+        <span className="text-[10px] font-black uppercase tracking-wider text-stone-400 mr-1 shrink-0">
+          Quick Pivot:
+        </span>
+        {[
+          { label: 'All World', key: 'All' },
+          { label: '🇮🇳 India (Main Hubs)', key: 'India' },
+          { label: '🇯🇵 Japan / East Asia', key: 'East Asia' },
+          { label: '🇪🇺 Europe', key: 'Europe' },
+          { label: '🇺🇸 Americas', key: 'Americas' },
+        ].map((tab) => (
+          <button
+            key={tab.key}
+            type="button"
+            onClick={() => handleSelectRegion(tab.key)}
+            className={`px-3 py-1 rounded-xl font-bold whitespace-nowrap transition-all border ${
+              activeRegionFilter === tab.key
+                ? 'bg-emerald-600 text-white border-emerald-400 shadow-md shadow-emerald-900/40'
+                : 'bg-stone-900/80 text-stone-300 hover:text-white hover:bg-stone-800 border-white/10'
+            }`}
           >
-            {/* Equator & Meridian Guide */}
-            <line x1="0" y1="250" x2="1000" y2="250" stroke="#047857" strokeWidth="0.5" strokeDasharray="6 6" opacity="0.3" />
-            <line x1="500" y1="0" x2="500" y2="500" stroke="#047857" strokeWidth="0.5" strokeDasharray="6 6" opacity="0.3" />
+            {tab.label}
+          </button>
+        ))}
+      </div>
 
-            {/* Greenland */}
-            <path
-              d="M 330 35 Q 370 25 390 50 T 370 95 Q 340 95 330 65 Z"
-              fill="#18181b"
-              stroke="#27272a"
-              strokeWidth="1"
-            />
+      {/* ========================================================
+          2. REAL GEOGRAPHIC MAP CONTAINER
+      ======================================================== */}
+      <div className="relative w-full h-[540px] sm:h-[600px] lg:h-[650px] rounded-3xl overflow-hidden border border-white/20 shadow-2xl bg-[#090d12]">
+        {/* Leaflet Map Div */}
+        <div ref={mapContainerRef} className="w-full h-full z-10" />
 
-            {/* Canada & Arctic */}
-            <path
-              d="M 120 45 Q 220 30 280 50 T 320 85 Q 280 110 240 105 T 160 90 Z"
-              fill="#18181b"
-              stroke="#27272a"
-              strokeWidth="1"
-            />
-
-            {/* 🇺🇸 UNITED STATES & NORTH AMERICA */}
-            <path
-              d="M 120 75 Q 180 55 240 75 T 310 95 Q 290 145 240 185 T 180 235 Q 140 195 120 145 Z"
-              fill={selectedCountryCode === 'US' ? '#047857' : '#18181b'}
-              stroke={selectedCountryCode === 'US' ? '#34d399' : '#3f3f46'}
-              strokeWidth={selectedCountryCode === 'US' ? '2.5' : '1.2'}
-              className="cursor-pointer transition-all duration-300 hover:fill-emerald-950/80 hover:stroke-emerald-400"
-              onClick={() => {
-                if (!hasMovedRef.current) handleSelectCountry('US');
-              }}
-              onMouseEnter={() => setHoveredCountry('United States (4 Destinations)')}
-              onMouseLeave={() => setHoveredCountry(null)}
-            />
-
-            {/* Central America & Mexico */}
-            <path
-              d="M 175 235 Q 225 235 240 260 T 265 285 Q 240 295 215 275 T 175 235 Z"
-              fill="#18181b"
-              stroke="#27272a"
-              strokeWidth="1"
-            />
-
-            {/* 🇧🇷 BRAZIL & SOUTH AMERICA */}
-            <path
-              d="M 270 270 Q 340 260 375 305 T 355 405 Q 310 460 275 480 T 260 375 Q 245 305 270 270 Z"
-              fill={selectedCountryCode === 'BR' ? '#047857' : '#18181b'}
-              stroke={selectedCountryCode === 'BR' ? '#34d399' : '#3f3f46'}
-              strokeWidth={selectedCountryCode === 'BR' ? '2.5' : '1.2'}
-              className="cursor-pointer transition-all duration-300 hover:fill-emerald-950/80 hover:stroke-emerald-400"
-              onClick={() => {
-                if (!hasMovedRef.current) handleSelectCountry('BR');
-              }}
-              onMouseEnter={() => setHoveredCountry('Brazil & South America (Rio de Janeiro)')}
-              onMouseLeave={() => setHoveredCountry(null)}
-            />
-
-            {/* Scandinavia */}
-            <path
-              d="M 485 55 Q 525 45 535 85 T 510 120 Q 485 110 485 55 Z"
-              fill="#18181b"
-              stroke="#27272a"
-              strokeWidth="1"
-            />
-
-            {/* British Isles */}
-            <path
-              d="M 435 105 Q 455 95 460 120 T 445 145 Q 430 135 435 105 Z"
-              fill="#18181b"
-              stroke="#27272a"
-              strokeWidth="1"
-            />
-
-            {/* 🇫🇷 FRANCE & WESTERN EUROPE */}
-            <path
-              d="M 460 110 Q 525 100 560 130 T 540 180 Q 485 200 465 170 T 460 110 Z"
-              fill={selectedCountryCode === 'FR' ? '#047857' : '#18181b'}
-              stroke={selectedCountryCode === 'FR' ? '#34d399' : '#3f3f46'}
-              strokeWidth={selectedCountryCode === 'FR' ? '2.5' : '1.2'}
-              className="cursor-pointer transition-all duration-300 hover:fill-emerald-950/80 hover:stroke-emerald-400"
-              onClick={() => {
-                if (!hasMovedRef.current) handleSelectCountry('FR');
-              }}
-              onMouseEnter={() => setHoveredCountry('France (Paris & Côte d’Azur)')}
-              onMouseLeave={() => setHoveredCountry(null)}
-            />
-
-            {/* 🇪🇬 EGYPT & NORTH AFRICA */}
-            <path
-              d="M 535 195 Q 585 190 590 225 T 555 245 Q 530 225 535 195 Z"
-              fill={selectedCountryCode === 'EG' ? '#047857' : '#18181b'}
-              stroke={selectedCountryCode === 'EG' ? '#34d399' : '#3f3f46'}
-              strokeWidth={selectedCountryCode === 'EG' ? '2.5' : '1.2'}
-              className="cursor-pointer transition-all duration-300 hover:fill-emerald-950/80 hover:stroke-emerald-400"
-              onClick={() => {
-                if (!hasMovedRef.current) handleSelectCountry('EG');
-              }}
-              onMouseEnter={() => setHoveredCountry('Egypt (Cairo & Giza Pyramids)')}
-              onMouseLeave={() => setHoveredCountry(null)}
-            />
-
-            {/* Rest of Africa */}
-            <path
-              d="M 460 200 Q 535 195 560 250 T 545 350 Q 510 410 470 380 T 440 270 Z"
-              fill="#18181b"
-              stroke="#27272a"
-              strokeWidth="1"
-            />
-
-            {/* Madagascar */}
-            <path
-              d="M 585 340 Q 605 330 610 370 T 590 395 Z"
-              fill="#18181b"
-              stroke="#27272a"
-              strokeWidth="1"
-            />
-
-            {/* Russia / Siberia / Northern Asia */}
-            <path
-              d="M 570 70 Q 740 50 860 80 T 895 150 Q 810 165 720 150 T 570 110 Z"
-              fill="#18181b"
-              stroke="#27272a"
-              strokeWidth="1"
-            />
-
-            {/* China & East Asia */}
-            <path
-              d="M 680 145 Q 795 135 835 195 T 775 255 Q 705 235 665 185 Z"
-              fill="#18181b"
-              stroke="#27272a"
-              strokeWidth="1"
-            />
-
-            {/* 🇮🇳 INDIA (Highlighted Centerpiece with accurate Subcontinental Peninsula) */}
-            <path
-              d="M 655 210 Q 705 205 720 235 T 710 270 Q 692 315 680 325 T 665 285 Q 648 248 655 210 Z"
-              fill={selectedCountryCode === 'IN' ? '#047857' : '#064e3b'}
-              stroke={selectedCountryCode === 'IN' ? '#34d399' : '#10b981'}
-              strokeWidth={selectedCountryCode === 'IN' ? '3' : '2'}
-              className="cursor-pointer transition-all duration-300 hover:fill-emerald-600 filter drop-shadow-[0_0_14px_rgba(52,211,153,0.55)]"
-              onClick={() => {
-                if (!hasMovedRef.current) handleSelectCountry('IN');
-              }}
-              onMouseEnter={() => setHoveredCountry('India (Hampi, Tirupati, Munnar, Goa, Jaipur, Varanasi)')}
-              onMouseLeave={() => setHoveredCountry(null)}
-            />
-
-            {/* Sri Lanka */}
-            <circle cx="688" cy="335" r="4" fill="#10b981" opacity="0.8" />
-
-            {/* Southeast Asia */}
-            <path
-              d="M 725 240 Q 770 240 775 280 T 740 310 Q 720 280 725 240 Z"
-              fill="#18181b"
-              stroke="#27272a"
-              strokeWidth="1"
-            />
-
-            {/* Indonesia */}
-            <path
-              d="M 750 310 Q 820 310 840 330 T 780 345 Z"
-              fill="#18181b"
-              stroke="#27272a"
-              strokeWidth="1"
-            />
-
-            {/* 🇯🇵 JAPAN (Honshu, Hokkaido, Kyushu) */}
-            <path
-              d="M 830 165 Q 855 155 860 185 T 845 225 Q 830 215 830 165 Z"
-              fill={selectedCountryCode === 'JP' ? '#047857' : '#18181b'}
-              stroke={selectedCountryCode === 'JP' ? '#34d399' : '#3f3f46'}
-              strokeWidth={selectedCountryCode === 'JP' ? '2.5' : '1.2'}
-              className="cursor-pointer transition-all duration-300 hover:fill-emerald-950/80 hover:stroke-emerald-400"
-              onClick={() => {
-                if (!hasMovedRef.current) handleSelectCountry('JP');
-              }}
-              onMouseEnter={() => setHoveredCountry('Japan (Tokyo & Kyoto)')}
-              onMouseLeave={() => setHoveredCountry(null)}
-            />
-
-            {/* 🇦🇺 AUSTRALIA & OCEANIA */}
-            <path
-              d="M 765 330 Q 860 320 890 360 T 870 430 Q 805 450 765 410 T 765 330 Z"
-              fill={selectedCountryCode === 'AU' ? '#047857' : '#18181b'}
-              stroke={selectedCountryCode === 'AU' ? '#34d399' : '#3f3f46'}
-              strokeWidth={selectedCountryCode === 'AU' ? '2.5' : '1.2'}
-              className="cursor-pointer transition-all duration-300 hover:fill-emerald-950/80 hover:stroke-emerald-400"
-              onClick={() => {
-                if (!hasMovedRef.current) handleSelectCountry('AU');
-              }}
-              onMouseEnter={() => setHoveredCountry('Australia (Sydney & Harbour)')}
-              onMouseLeave={() => setHoveredCountry(null)}
-            />
-
-            {/* New Zealand */}
-            <path
-              d="M 900 415 Q 925 405 920 445 T 895 465 Z"
-              fill="#18181b"
-              stroke="#27272a"
-              strokeWidth="1"
-            />
-          </svg>
-
-          {/* ========================================================
-              DESTINATION MARKER NODES (ACTIVE COUNTRY)
-          ======================================================== */}
-          {activeCountry.destinations.map((dest) => {
-            const isSelectedPin =
-              selectedPinSlug === dest.slug ||
-              selectedPinSlug === dest.id ||
-              selectedDestinationSlug === dest.slug;
-
-            return (
-              <motion.div
-                key={dest.id}
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.2 }}
-                style={{
-                  left: `${dest.coordinates.xPercent}%`,
-                  top: `${dest.coordinates.yPercent}%`,
-                }}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  if (!hasMovedRef.current) {
-                    handleSelectMarker(dest);
-                  }
-                }}
-                onMouseEnter={() => setHoveredPin(dest)}
-                onMouseLeave={() => setHoveredPin(null)}
-                className="absolute -translate-x-1/2 -translate-y-1/2 z-20 cursor-pointer group select-none no-drag"
-              >
-                {/* Radar ping animation */}
-                <span className="absolute -inset-2.5 rounded-full bg-emerald-400/40 animate-ping pointer-events-none" />
-
-                {/* Pin Badge */}
-                <div
-                  className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full shadow-2xl transition-all duration-200 border ${
-                    isSelectedPin
-                      ? 'bg-emerald-500 text-white border-white scale-110 shadow-emerald-500/60 ring-4 ring-emerald-400/30'
-                      : 'bg-stone-900/95 text-stone-200 border-emerald-500/60 group-hover:border-emerald-400 group-hover:scale-115'
-                  }`}
-                >
-                  <span className="text-xs">{dest.icon}</span>
-                  <span className="text-[11px] font-black tracking-tight whitespace-nowrap hidden sm:inline">
-                    {dest.name}
-                  </span>
-                  {dest.isHiddenGemNearby && (
-                    <span className="text-[9px] text-amber-300 font-bold" title="Hidden Gem Nearby">
-                      💎
-                    </span>
-                  )}
-                </div>
-
-                {/* Floating tooltip on hover */}
-                {hoveredPin?.id === dest.id && (
-                  <div className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 z-40 px-3 py-1.5 rounded-xl bg-stone-900/95 backdrop-blur-md border border-white/20 text-white shadow-2xl pointer-events-none whitespace-nowrap text-center animate-in fade-in">
-                    <div className="text-xs font-black text-emerald-400 flex items-center justify-center gap-1">
-                      <span>💎</span>
-                      <span>{dest.name}</span>
-                    </div>
-                    <div className="text-[10px] text-stone-300">
-                      {dest.stateOrRegion}, {activeCountry.name}
-                    </div>
-                    <div className="text-[9px] text-stone-400 mt-0.5">Click to view details &amp; itinerary</div>
-                  </div>
-                )}
-              </motion.div>
-            );
-          })}
-        </motion.div>
-
-        {/* Hover Country Tooltip */}
-        {hoveredCountry && (
-          <div className="absolute top-4 left-4 z-40 px-3.5 py-1.5 rounded-xl bg-stone-900/95 backdrop-blur-md border border-white/20 text-xs font-bold text-white shadow-xl pointer-events-none animate-in fade-in">
-            📍 {hoveredCountry} • Click to explore
+        {/* Loading Spinner during initial tile setup */}
+        {!mapLoaded && (
+          <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-stone-950/90 text-white gap-3">
+            <div className="w-10 h-10 rounded-full border-3 border-emerald-400 border-t-transparent animate-spin" />
+            <span className="text-xs uppercase font-extrabold tracking-widest text-emerald-400">
+              Loading Real Geographic World Map...
+            </span>
           </div>
         )}
 
-        {/* Bottom Left Quick Help Banner */}
         {/* Instruction Banner at lower-left */}
-        <div className="absolute bottom-4 left-4 z-20 hidden md:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-stone-950/80 backdrop-blur-md border border-white/10 text-[11px] text-stone-400 pointer-events-none">
-          <Compass className="w-3.5 h-3.5 text-emerald-400" />
-          <span>Left-click + drag to pan • Mouse wheel or pinch to zoom</span>
+        <div className="absolute bottom-4 left-4 z-20 hidden md:flex items-center gap-2 px-3.5 py-2 rounded-xl bg-stone-950/85 backdrop-blur-md border border-white/15 text-[11px] text-stone-300 pointer-events-none shadow-lg">
+          <Compass className="w-4 h-4 text-emerald-400" />
+          <span>Left-click + drag to pan • Mouse wheel or pinch to zoom • Click pins to inspect</span>
         </div>
 
         {/* ========================================================
@@ -788,15 +877,15 @@ export function WorldExplorerMap({
         ======================================================== */}
         <div className="absolute right-4 bottom-4 z-40 flex flex-col items-center bg-stone-900/95 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl overflow-hidden divide-y divide-white/10 select-none">
           {/* Zoom Level Indicator */}
-          <div className="px-2.5 py-1 text-[9px] font-black uppercase text-emerald-400 bg-stone-950/80 text-center tracking-wider min-w-[44px]">
-            {Math.round(zoom * 100)}%
+          <div className="px-2.5 py-1 text-[9px] font-black uppercase text-emerald-400 bg-stone-950/90 text-center tracking-wider min-w-[46px]">
+            {Math.round(currentZoom * 20)}%
           </div>
 
           {/* Zoom In (+) */}
           <button
             type="button"
             onClick={handleZoomIn}
-            className="p-3 text-stone-300 hover:text-emerald-400 hover:bg-white/10 transition-colors flex items-center justify-center active:scale-90"
+            className="p-3 text-stone-200 hover:text-emerald-400 hover:bg-white/10 transition-colors flex items-center justify-center active:scale-90"
             aria-label="Zoom In"
             title="Zoom In (+)"
           >
@@ -807,7 +896,7 @@ export function WorldExplorerMap({
           <button
             type="button"
             onClick={handleZoomOut}
-            className="p-3 text-stone-300 hover:text-emerald-400 hover:bg-white/10 transition-colors flex items-center justify-center active:scale-90"
+            className="p-3 text-stone-200 hover:text-emerald-400 hover:bg-white/10 transition-colors flex items-center justify-center active:scale-90"
             aria-label="Zoom Out"
             title="Zoom Out (−)"
           >
@@ -818,7 +907,7 @@ export function WorldExplorerMap({
           <button
             type="button"
             onClick={handleResetView}
-            className="p-3 text-stone-300 hover:text-emerald-400 hover:bg-white/10 transition-colors flex items-center justify-center active:scale-90"
+            className="p-3 text-stone-200 hover:text-emerald-400 hover:bg-white/10 transition-colors flex items-center justify-center active:scale-90"
             aria-label="Reset Map View"
             title="Reset to World View (⌂)"
           >
@@ -836,22 +925,24 @@ export function WorldExplorerMap({
             onClick={() => setIsPanelCollapsed(false)}
             className="absolute top-3 right-3 z-30 px-3.5 py-2 rounded-2xl bg-stone-950/90 backdrop-blur-2xl border border-emerald-500/40 text-white shadow-2xl flex items-center gap-2 hover:scale-105 active:scale-95 transition-all"
           >
-            <span className="text-lg">{activeCountry.flag}</span>
+            <span className="text-lg">{activeDestination.flag}</span>
             <div className="text-left">
-              <span className="text-xs font-black block text-emerald-400">{activeCountry.name}</span>
+              <span className="text-xs font-black block text-emerald-400">
+                {activeDestination.name}
+              </span>
               <span className="text-[10px] text-stone-300">
-                {displayedDestinations.length} Destinations • Show Panel ▾
+                Show Destination Card ▾
               </span>
             </div>
           </button>
         )}
 
         <AnimatePresence>
-          {!isPanelCollapsed && activeCountry && (
+          {!isPanelCollapsed && activeDestination && (
             <motion.div
-              initial={{ opacity: 0, x: 40, scale: 0.96 }}
+              initial={{ opacity: 0, x: 30, scale: 0.96 }}
               animate={{ opacity: 1, x: 0, scale: 1 }}
-              exit={{ opacity: 0, x: 40, scale: 0.96 }}
+              exit={{ opacity: 0, x: 30, scale: 0.96 }}
               transition={{ duration: 0.25 }}
               className="absolute top-3 right-3 bottom-36 sm:bottom-36 w-80 sm:w-92 max-w-[calc(100%-1.5rem)] bg-stone-950/95 backdrop-blur-2xl border border-white/20 rounded-2xl shadow-2xl z-30 flex flex-col overflow-hidden text-white"
             >
@@ -859,13 +950,13 @@ export function WorldExplorerMap({
               <div className="p-4 border-b border-white/10 bg-gradient-to-r from-stone-900 via-stone-950 to-stone-900 shrink-0">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
-                    <span className="text-2xl">{activeCountry.flag}</span>
+                    <span className="text-2xl">{activeDestination.flag}</span>
                     <div>
                       <h3 className="font-black text-sm uppercase tracking-wide text-white">
-                        {activeCountry.name}
+                        {activeDestination.name}
                       </h3>
-                      <span className="text-[10px] text-emerald-400 font-semibold">
-                        {activeCountry.continent} • {activeCountry.destinations.length} Curated Destinations
+                      <span className="text-[10px] text-emerald-400 font-bold block">
+                        {activeDestination.stateOrRegion}, {activeDestination.country}
                       </span>
                     </div>
                   </div>
@@ -878,125 +969,81 @@ export function WorldExplorerMap({
                     <Minimize2 className="w-4 h-4" />
                   </button>
                 </div>
+              </div>
 
-                {/* State selector tabs for India exploration */}
-                {activeCountry.states && (
-                  <div className="flex items-center gap-1.5 mt-3 overflow-x-auto no-scrollbar pt-1">
-                    <button
-                      type="button"
-                      onClick={() => setActiveStateTab('All')}
-                      className={`px-2.5 py-1 rounded-lg text-[10px] font-bold whitespace-nowrap transition-all ${
-                        activeStateTab === 'All'
-                          ? 'bg-emerald-600 text-white'
-                          : 'bg-white/5 text-stone-300 hover:bg-white/10'
-                      }`}
-                    >
-                      All States
-                    </button>
-                    {activeCountry.states.map((st) => (
-                      <button
-                        key={st.name}
-                        type="button"
-                        onClick={() => setActiveStateTab(st.name)}
-                        className={`px-2.5 py-1 rounded-lg text-[10px] font-bold whitespace-nowrap transition-all ${
-                          activeStateTab === st.name
-                            ? 'bg-emerald-600 text-white'
-                            : 'bg-white/5 text-stone-300 hover:bg-white/10'
-                        }`}
+              {/* Destination Card Body */}
+              <div className="flex-1 overflow-y-auto p-4 space-y-3.5">
+                {/* Hero Photo */}
+                <div className="relative h-36 rounded-xl overflow-hidden border border-white/15">
+                  <img
+                    src={activeDestination.image}
+                    alt={activeDestination.name}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-transparent to-transparent" />
+                  <span className="absolute bottom-2 left-2 px-2 py-0.5 rounded-md bg-stone-900/80 text-[10px] font-black text-emerald-300 backdrop-blur-md">
+                    {activeDestination.isAvailableInApp ? '⭐ Active Hub' : '🌍 World Discovery'}
+                  </span>
+                </div>
+
+                {/* Subtitle */}
+                <div>
+                  <span className="text-[10px] uppercase font-bold text-stone-400 block mb-0.5">
+                    Gateway Summary
+                  </span>
+                  <p className="text-xs text-stone-200 font-medium leading-relaxed">
+                    {activeDestination.subtitle}
+                  </p>
+                </div>
+
+                {/* Hidden Gem Highlight */}
+                {activeDestination.hiddenGemHighlight && (
+                  <div className="p-3 rounded-xl bg-emerald-950/40 border border-emerald-500/40 space-y-1">
+                    <span className="text-[10px] uppercase font-black tracking-wider text-emerald-400 flex items-center gap-1">
+                      <Sparkles className="w-3 h-3 text-emerald-400" />
+                      <span>Hidden Gem Highlight</span>
+                    </span>
+                    <p className="text-xs text-emerald-100 font-semibold">
+                      {activeDestination.hiddenGemHighlight}
+                    </p>
+                  </div>
+                )}
+
+                {/* Tags */}
+                {activeDestination.tags && (
+                  <div className="flex flex-wrap gap-1.5 pt-1">
+                    {activeDestination.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="px-2 py-0.5 rounded-md text-[10px] font-semibold bg-white/10 text-stone-300 border border-white/10"
                       >
-                        {st.name}
-                      </button>
+                        #{tag}
+                      </span>
                     ))}
                   </div>
                 )}
               </div>
 
-              {/* Destinations Scrollable List */}
-              <div className="flex-1 overflow-y-auto p-3 space-y-3">
-                {displayedDestinations.map((dest) => {
-                  const isCurrentlyActive =
-                    dest.slug === selectedDestinationSlug || selectedPinSlug === dest.slug;
-
-                  return (
-                    <div
-                      key={dest.id}
-                      onClick={() => handleSelectMarker(dest)}
-                      className={`group p-3 rounded-xl border transition-all duration-300 cursor-pointer ${
-                        isCurrentlyActive
-                          ? 'bg-emerald-950/50 border-emerald-500/80 shadow-lg shadow-emerald-950/60 ring-1 ring-emerald-500/40'
-                          : 'bg-white/5 hover:bg-white/10 border-white/10'
-                      }`}
-                    >
-                      <div className="flex gap-3">
-                        <img
-                          src={dest.image}
-                          alt={dest.name}
-                          className="w-20 h-20 rounded-xl object-cover border border-white/15 shrink-0 group-hover:scale-105 transition-transform"
-                          loading="lazy"
-                        />
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-1.5">
-                            <span className="text-sm">{dest.icon}</span>
-                            <h4 className="font-bold text-white text-xs truncate">
-                              {dest.name}
-                            </h4>
-                            {isCurrentlyActive && (
-                              <span className="px-1.5 py-0.5 rounded text-[8px] font-black uppercase bg-emerald-500/30 text-emerald-300 border border-emerald-400/40 shrink-0">
-                                Active Pin
-                              </span>
-                            )}
-                          </div>
-                          <span className="text-[10px] text-stone-400 block mt-0.5">
-                            {dest.stateOrRegion}
-                          </span>
-                          <p className="text-[10px] text-stone-300 line-clamp-2 mt-1 leading-snug">
-                            {dest.subtitle}
-                          </p>
-                        </div>
-                      </div>
-
-                      {/* 💎 Hidden Gem Nearby Highlight */}
-                      {dest.isHiddenGemNearby && dest.hiddenGemHighlight && (
-                        <div className="mt-2.5 p-2 rounded-lg bg-stone-900/90 border border-white/5 flex items-start gap-1.5 text-[10px]">
-                          <span className="text-amber-400 shrink-0">💎</span>
-                          <span className="text-stone-300">
-                            <strong className="text-amber-300">Hidden Gem:</strong> {dest.hiddenGemHighlight}
-                          </span>
-                        </div>
-                      )}
-
-                      {/* Action Button */}
-                      <div className="mt-2.5 pt-2 border-t border-white/10 flex items-center justify-between">
-                        <span className="text-[10px] text-stone-400">
-                          {dest.isAvailableInApp ? '✓ Full AI Itinerary' : 'Global Discovery'}
-                        </span>
-
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleSelectMarker(dest);
-                          }}
-                          className={`px-3 py-1.5 rounded-lg text-[10px] font-black flex items-center gap-1 transition-all ${
-                            isCurrentlyActive
-                              ? 'bg-emerald-500 text-white'
-                              : 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-md shadow-emerald-950'
-                          }`}
-                        >
-                          <span>{isCurrentlyActive ? 'Focus Map' : 'Explore'}</span>
-                          <ArrowRight className="w-3 h-3" />
-                        </button>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-
-              {/* Panel Footer */}
-              <div className="p-3 border-t border-white/10 bg-stone-900/60 text-center shrink-0">
-                <span className="text-[10px] text-stone-400 block">
-                  Click destination to focus map &amp; update journey
+              {/* Panel Footer CTA */}
+              <div className="p-3.5 border-t border-white/10 bg-stone-900/80 flex items-center justify-between gap-2 shrink-0">
+                <span className="text-[10px] text-stone-300 font-medium">
+                  {activeDestination.isAvailableInApp
+                    ? '✓ Full Itinerary Ready'
+                    : 'Global Off-Beat Spot'}
                 </span>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (activeDestination.slug) {
+                      onSelectDestination(activeDestination.slug);
+                    }
+                  }}
+                  className="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs flex items-center gap-1 shadow-md shadow-emerald-950 transition-all hover:scale-105 active:scale-95"
+                >
+                  <span>Explore Hub</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
               </div>
             </motion.div>
           )}
