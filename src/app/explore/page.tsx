@@ -5,6 +5,7 @@ import { DESTINATIONS } from '@/lib/data/seed';
 import { useAppStore } from '@/lib/store';
 import { TravelMap } from '@/components/map/TravelMap';
 import { GemDetailsModal } from '@/components/gems/GemDetailsModal';
+import { getAssetPath } from '@/lib/utils';
 import { HiddenGem } from '@/types';
 import { DESTINATION_VISUALS } from '@/lib/destinationVisuals';
 import {
@@ -90,9 +91,18 @@ export default function ExplorePage() {
             >
               <div className="w-16 h-16 rounded-xl overflow-hidden shrink-0">
                 <img
-                  src={gem.images[0]}
+                  src={gem.images?.[0] || getAssetPath('/images/destinations/munnar_tea_hills.jpg')}
                   alt={gem.name}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                  onError={(e) => {
+                    const fallback =
+                      gem.destinationSlug === 'munnar'
+                        ? getAssetPath('/images/destinations/munnar_tea_hills.jpg')
+                        : gem.destinationSlug === 'hampi'
+                        ? getAssetPath('/images/destinations/hampi_stone_chariot_hero.jpg')
+                        : getAssetPath('/images/destinations/tirupati_talakona_waterfall.jpg');
+                    e.currentTarget.src = fallback;
+                  }}
                 />
               </div>
               <div className="flex-1 min-w-0">

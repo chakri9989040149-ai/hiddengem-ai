@@ -5,7 +5,7 @@ import Link from 'next/link';
 import confetti from 'canvas-confetti';
 import { DESTINATIONS, HOTELS_SEED, RESTAURANTS_SEED, TRANSPORT_SEED } from '@/lib/data/seed';
 import { useAppStore } from '@/lib/store';
-import { formatCurrency, formatTime } from '@/lib/utils';
+import { formatCurrency, formatTime, getAssetPath } from '@/lib/utils';
 import { TRAVEL_VISUALS } from '@/lib/travelVisuals';
 import { DESTINATION_MEDIA } from '@/lib/destinationVisuals';
 import {
@@ -247,9 +247,18 @@ export default function SurpriseMePage() {
               >
                 <div className="h-44 overflow-hidden relative">
                   <img
-                    src={gem.images[0]}
+                    src={gem.images?.[0] || getAssetPath('/images/destinations/munnar_tea_hills.jpg')}
                     alt={gem.name}
                     className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500"
+                    onError={(e) => {
+                      const fallback =
+                        gem.destinationSlug === 'munnar'
+                          ? getAssetPath('/images/destinations/munnar_tea_hills.jpg')
+                          : gem.destinationSlug === 'hampi'
+                          ? getAssetPath('/images/destinations/hampi_stone_chariot_hero.jpg')
+                          : getAssetPath('/images/destinations/tirupati_talakona_waterfall.jpg');
+                      e.currentTarget.src = fallback;
+                    }}
                   />
                   <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-stone-900/80 backdrop-blur-md text-emerald-300 text-[10px] font-bold">
                     {gem.category}

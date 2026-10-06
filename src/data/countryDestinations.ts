@@ -267,7 +267,7 @@ export const WORLD_COUNTRIES: Record<string, CountryData> = {
         stateOrRegion: 'Wyoming',
         countryCode: 'US',
         subtitle: 'Vibrant Geothermal Hot Springs & Pristine Wilderness',
-        image: 'https://images.unsplash.com/photo-1533497197926-c9e810d510b3?auto=format&fit=crop&w=800&q=80',
+        image: 'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=800&q=80',
         icon: '🌋',
         isAvailableInApp: false,
         isHiddenGemNearby: true,

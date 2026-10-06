@@ -107,7 +107,7 @@ export const INDIAN_TRAVEL_VISUALS = {
       // Talakona waterfall cascade nestled in Seshachalam biosphere
       'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=2000&q=80',
       // Chinnakanal forest waterfall pool in Munnar
-      'https://images.unsplash.com/photo-1511497584788-87676104235f?auto=format&fit=crop&w=2000&q=80',
+      'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=2000&q=80',
       // Western Ghats hidden stream cascade
       'https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=2000&q=80',
     ],
@@ -150,9 +150,9 @@ export const INDIAN_TRAVEL_VISUALS = {
     ],
     heritage: [
       // UNESCO World Heritage Hampi Vijayanagara stone chariot and ruins
-      'https://images.unsplash.com/photo-1600100397608-f010e42e47e8?auto=format&fit=crop&w=2560&q=85',
+      getAssetPath('/images/destinations/hampi_stone_chariot_hero.jpg'),
       // Monolithic stone pillars of royal enclosure
-      'https://images.unsplash.com/photo-1599818816829-9e8c47494a86?auto=format&fit=crop&w=2000&q=80',
+      'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=2000&q=80',
     ],
     history: [
       // 11th-century Chandragiri stone fortress & palace near Tirupati
@@ -247,7 +247,7 @@ export const INDIAN_TRAVEL_VISUALS = {
       hero: getAssetPath('/images/destinations/munnar_tea_hills.jpg'),
       mainAttraction: getAssetPath('/images/destinations/munnar_tea_hills.jpg'),
       mountains: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2000&q=80',
-      waterfall: 'https://images.unsplash.com/photo-1511497584788-87676104235f?auto=format&fit=crop&w=2000&q=80',
+      waterfall: 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=2000&q=80',
       nature: 'https://images.unsplash.com/photo-1596176530529-78163a4f7af2?auto=format&fit=crop&w=2000&q=80',
       adventure: 'https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=2000&q=80',
       food: 'https://images.unsplash.com/photo-1589302168068-964664d93dc0?auto=format&fit=crop&w=1600&q=80', // Kerala sadya on banana leaf
@@ -284,7 +284,7 @@ export const INDIAN_TRAVEL_VISUALS = {
     Mountains: ['https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2000&q=80'],
     Nature: ['https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=2000&q=80'],
     History: ['https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=2000&q=80'],
-    Heritage: ['https://images.unsplash.com/photo-1600100397608-f010e42e47e8?auto=format&fit=crop&w=2000&q=80'],
+    Heritage: [getAssetPath('/images/destinations/hampi_stone_chariot_hero.jpg')],
     Spirituality: [getAssetPath('/images/destinations/tirupati_tirumala_hero.jpg')],
     Divine: ['https://images.unsplash.com/photo-1518457607834-6e8d80c183c5?auto=format&fit=crop&w=2000&q=80'],
     Adventure: ['https://images.unsplash.com/photo-1522163182402-834f871fd851?auto=format&fit=crop&w=2000&q=80'],
@@ -302,7 +302,7 @@ export const INDIAN_TRAVEL_VISUALS = {
     Stay: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80',
     Waterfalls: 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=1200&q=80',
     Mountains: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80',
-    Heritage: 'https://images.unsplash.com/photo-1600100397608-f010e42e47e8?auto=format&fit=crop&w=1200&q=80',
+    Heritage: getAssetPath('/images/destinations/hampi_stone_chariot_hero.jpg'),
     Spirituality: getAssetPath('/images/destinations/tirupati_tirumala_hero.jpg'),
     Adventure: 'https://images.unsplash.com/photo-1522163182402-834f871fd851?auto=format&fit=crop&w=1200&q=80',
     Return: 'https://images.unsplash.com/photo-1506015391300-4802dc74de2e?auto=format&fit=crop&w=1200&q=80',

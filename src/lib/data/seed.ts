@@ -110,7 +110,7 @@ export const DESTINATIONS: Destination[] = [
         ecoScore: 94,
         images: [
           getAssetPath('/images/destinations/tirupati_talakona_waterfall.jpg'),
-          'https://images.unsplash.com/photo-1511497584788-87676104235f?auto=format&fit=crop&w=800&q=80',
+          'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=800&q=80',
         ],
         description:
           'A majestic 270-foot cascade surrounded by dense medicinal flora, endangered slender loris habitats, and an exhilarating 240-meter tree canopy walk suspended high among ancient wild trees.',
@@ -175,7 +175,7 @@ export const DESTINATIONS: Destination[] = [
         ecoScore: 91,
         images: [
           'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=800&q=80',
-          'https://images.unsplash.com/photo-1599818816829-9e8c47494a86?auto=format&fit=crop&w=800&q=80',
+          'https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=800&q=80',
         ],
         description:
           'Built atop a massive 183m monolith rock, this crown jewel of southern architecture served as the secret secondary capital of Vijayanagara kings. The Raja Mahal palace was built entirely without wood, utilizing stone, brick, and lime mortar.',
@@ -435,7 +435,7 @@ export const DESTINATIONS: Destination[] = [
         ecoScore: 95,
         images: [
           'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=800&q=80',
-          'https://images.unsplash.com/photo-1511497584788-87676104235f?auto=format&fit=crop&w=800&q=80',
+          'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80',
         ],
         description:
           'A three-tier waterfall canyon trail carving through crimson sandstone cliffs. Adventurers follow a bubbling crystal stream passing through natural jacuzzis and sliding rock pools.',
@@ -705,8 +705,8 @@ export const DESTINATIONS: Destination[] = [
         estimatedCostInr: 50,
         ecoScore: 99,
         images: [
-          'https://images.unsplash.com/photo-1599818816829-9e8c47494a86?auto=format&fit=crop&w=800&q=80',
           'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=800&q=80',
+          'https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=800&q=80',
         ],
         description:
           'Older than the Vijayanagara Empire, Anegundi is the legendary monkey kingdom of Kishkindha. Preserved traditional mud homes, ancient stepwells, prehistoric painted rock shelters, and a sustainable eco-craft center make this a deeply rewarding cultural haven.',
@@ -835,7 +835,7 @@ export const DESTINATIONS: Destination[] = [
         estimatedCostInr: 0,
         ecoScore: 94,
         images: [
-          'https://images.unsplash.com/photo-1600100397608-f010e42e47e8?auto=format&fit=crop&w=800&q=80',
+          getAssetPath('/images/destinations/hampi_stone_chariot_hero.jpg'),
           'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=800&q=80',
         ],
         description:
@@ -884,7 +884,7 @@ export const DESTINATIONS: Destination[] = [
     gallery: [
       getAssetPath('/images/destinations/munnar_tea_hills.jpg'),
       'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1511497584788-87676104235f?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=800&q=80',
     ],
     openingHours: '09:00 AM – 05:00 PM',
     bestTravelTime: 'September to March (Crisp Mountain Mist)',
@@ -1041,7 +1041,7 @@ export const DESTINATIONS: Destination[] = [
         estimatedCostInr: 800,
         ecoScore: 99,
         images: [
-          'https://images.unsplash.com/photo-1511497584788-87676104235f?auto=format&fit=crop&w=800&q=80',
+          'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80',
           'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=800&q=80',
         ],
         description:
@@ -1171,8 +1171,8 @@ export const DESTINATIONS: Destination[] = [
         estimatedCostInr: 50,
         ecoScore: 97,
         images: [
-          'https://images.unsplash.com/photo-1511497584788-87676104235f?auto=format&fit=crop&w=800&q=80',
-          'https://images.unsplash.com/photo-1596176530529-78163a4f7af2?auto=format&fit=crop&w=800&q=80',
+          'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1200&q=80',
+          'https://images.unsplash.com/photo-1596176530529-78163a4f7af2?auto=format&fit=crop&w=1200&q=80',
         ],
         description:
           'Enveloped in the gentle aroma of over 60,000 wild sandalwood trees, Marayoor is famed for organic solid sugarcane jaggery (Marayoor Sharkkara) prepared right before your eyes in traditional boiling pans, alongside prehistoric stone dolmens.',

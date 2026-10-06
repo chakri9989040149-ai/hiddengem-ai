@@ -7,6 +7,7 @@ import { rankHiddenGems } from '@/lib/scoring';
 import { GemCard } from '@/components/gems/GemCard';
 import { GemDetailsModal } from '@/components/gems/GemDetailsModal';
 import { Category, HiddenGem } from '@/types';
+import { getAssetPath } from '@/lib/utils';
 import { DESTINATION_VISUALS } from '@/lib/destinationVisuals';
 import {
   Sparkles,
@@ -66,6 +67,9 @@ export default function HiddenGemsPage() {
           src={DESTINATION_VISUALS[selectedDestinationSlug]?.hero || destination.heroImage}
           alt={destination.name}
           className="absolute inset-0 w-full h-full object-cover brightness-[0.55] contrast-[1.1]"
+          onError={(e) => {
+            e.currentTarget.src = getAssetPath('/images/destinations/munnar_tea_hills.jpg');
+          }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/40 to-transparent" />
 

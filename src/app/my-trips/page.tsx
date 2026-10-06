@@ -49,7 +49,7 @@ export default function MyTripsPage() {
       ecoScore: 96,
       gemsCount: 4,
       gemsNames: ['Sanapur Lake', 'Daroji Sloth Bear', 'Achyutaraya Temple', 'Anegundi Village'],
-      image: 'https://images.unsplash.com/photo-1600100397608-f010e42e47e8?auto=format&fit=crop&w=600&q=80',
+      image: getAssetPath('/images/destinations/hampi_stone_chariot_hero.jpg'),
     },
     {
       id: 'trip-3',

@@ -9,6 +9,7 @@ import { discoverHiddenPlaces } from '@/lib/hiddenDiscoveryEngine';
 import { DESTINATION_MEDIA } from '@/lib/destinationVisuals';
 import { GemDetailsModal } from '@/components/gems/GemDetailsModal';
 import { TravelMap } from '@/components/map/TravelMap';
+import { formatCurrency, getAssetPath } from '@/lib/utils';
 import { HiddenGem } from '@/types';
 import {
   MapPin,
@@ -217,9 +218,18 @@ export default function HiddenDiscoveryResultClient({ id }: HiddenDiscoveryResul
                 {/* Photo & Badges */}
                 <div className="relative h-56 overflow-hidden">
                   <img
-                    src={gem.images[0]}
+                    src={gem.images?.[0] || getAssetPath('/images/destinations/munnar_tea_hills.jpg')}
                     alt={gem.name}
                     className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 brightness-[0.9]"
+                    onError={(e) => {
+                      const fallback =
+                        gem.destinationSlug === 'munnar'
+                          ? getAssetPath('/images/destinations/munnar_tea_hills.jpg')
+                          : gem.destinationSlug === 'hampi'
+                          ? getAssetPath('/images/destinations/hampi_stone_chariot_hero.jpg')
+                          : getAssetPath('/images/destinations/tirupati_talakona_waterfall.jpg');
+                      e.currentTarget.src = fallback;
+                    }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-transparent to-stone-950/20" />
 

@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { HiddenGem, RecommendationScore, Destination } from '@/types';
 import { useAppStore } from '@/lib/store';
-import { formatCurrency, formatTime } from '@/lib/utils';
+import { formatCurrency, formatTime, getAssetPath } from '@/lib/utils';
 import {
   X,
   Sparkles,
@@ -107,17 +107,35 @@ export function GemDetailsModal({ gem, score, onClose }: GemDetailsModalProps) {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 rounded-2xl overflow-hidden">
           <div className="h-56 sm:h-64 w-full">
             <img
-              src={gem.images[0]}
+              src={gem.images?.[0] || getAssetPath('/images/destinations/munnar_tea_hills.jpg')}
               alt={gem.name}
               className="w-full h-full object-cover"
+              onError={(e) => {
+                const fallback =
+                  gem.destinationSlug === 'munnar'
+                    ? getAssetPath('/images/destinations/munnar_tea_hills.jpg')
+                    : gem.destinationSlug === 'hampi'
+                    ? getAssetPath('/images/destinations/hampi_stone_chariot_hero.jpg')
+                    : getAssetPath('/images/destinations/tirupati_talakona_waterfall.jpg');
+                e.currentTarget.src = fallback;
+              }}
             />
           </div>
-          {gem.images[1] && (
+          {gem.images?.[1] && (
             <div className="hidden sm:block h-64 w-full">
               <img
                 src={gem.images[1]}
                 alt={gem.name}
                 className="w-full h-full object-cover"
+                onError={(e) => {
+                  const fallback =
+                    gem.destinationSlug === 'munnar'
+                      ? getAssetPath('/images/destinations/munnar_tea_hills.jpg')
+                      : gem.destinationSlug === 'hampi'
+                      ? getAssetPath('/images/destinations/hampi_stone_chariot_hero.jpg')
+                      : getAssetPath('/images/destinations/tirupati_talakona_waterfall.jpg');
+                  e.currentTarget.src = fallback;
+                }}
               />
             </div>
           )}

@@ -3,7 +3,7 @@
 import React from 'react';
 import { HiddenGem, RecommendationScore } from '@/types';
 import { useAppStore } from '@/lib/store';
-import { formatTime, formatCurrency } from '@/lib/utils';
+import { formatTime, formatCurrency, getAssetPath } from '@/lib/utils';
 import {
   Sparkles,
   MapPin,
@@ -46,10 +46,19 @@ export function GemCard({ gem, score, onOpenDetails, onViewOnMap }: GemCardProps
       <div>
         <div className="relative h-48 w-full overflow-hidden bg-stone-100 dark:bg-stone-800">
           <img
-            src={gem.images[0]}
+            src={gem.images?.[0] || getAssetPath('/images/destinations/munnar_tea_hills.jpg')}
             alt={gem.name}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             loading="lazy"
+            onError={(e) => {
+              const fallback =
+                gem.destinationSlug === 'munnar'
+                  ? getAssetPath('/images/destinations/munnar_tea_hills.jpg')
+                  : gem.destinationSlug === 'hampi'
+                  ? getAssetPath('/images/destinations/hampi_stone_chariot_hero.jpg')
+                  : getAssetPath('/images/destinations/tirupati_talakona_waterfall.jpg');
+              e.currentTarget.src = fallback;
+            }}
           />
 
           {/* Match Score Badge (Exact 100% Weight Formula) */}

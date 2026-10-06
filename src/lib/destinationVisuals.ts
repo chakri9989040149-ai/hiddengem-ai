@@ -157,8 +157,8 @@ export const DESTINATION_MEDIA: Record<string, DestinationMediaProfile> = {
       '/images/destinations/tirupati_seshachalam_hills.jpg',
     ],
     adventureImages: [
-      'https://images.unsplash.com/photo-1511497584788-87676104235f?auto=format&fit=crop&w=2000&q=80',
       'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=2000&q=80',
+      'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=2000&q=80',
     ],
     foodImages: [
       'https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?auto=format&fit=crop&w=1200&q=80', // Tirupati Laddu
@@ -235,32 +235,32 @@ export const DESTINATION_MEDIA: Record<string, DestinationMediaProfile> = {
       'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=2560&q=85', // Sanapur lake
     ],
     attractionImages: {
-      'Virupaksha Temple': 'https://images.unsplash.com/photo-1599818816829-9e8c47494a86?auto=format&fit=crop&w=1600&q=80',
-      'Vittala Temple & Stone Chariot': 'https://images.unsplash.com/photo-1600100397608-f010e42e47e8?auto=format&fit=crop&w=1600&q=80',
+      'Virupaksha Temple': 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=1600&q=80',
+      'Vittala Temple & Stone Chariot': getAssetPath('/images/destinations/hampi_stone_chariot_hero.jpg'),
       'Sanapur Lake': 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=1600&q=80',
       'Matanga Hill': 'https://images.unsplash.com/photo-1522163182402-834f871fd851?auto=format&fit=crop&w=1600&q=80',
       'Anjaneya Hill': 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1600&q=80',
       'Anegundi Village': 'https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1600&q=80',
       'Daroji Sanctuary': 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1600&q=80',
-      'Achyutaraya Temple': 'https://images.unsplash.com/photo-1600100397608-f010e42e47e8?auto=format&fit=crop&w=1600&q=80',
+      'Achyutaraya Temple': 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=1600&q=80',
     },
     hiddenGemImages: {
       'gem-sanapur': 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=1200&q=80',
       'gem-anjaneya': 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1200&q=80',
       'gem-anegundi': 'https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1200&q=80',
       'gem-daroji': 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1200&q=80',
-      'gem-achyutaraya': 'https://images.unsplash.com/photo-1600100397608-f010e42e47e8?auto=format&fit=crop&w=1200&q=80',
+      'gem-achyutaraya': 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=1200&q=80',
     },
     natureImages: [
       'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=2000&q=80',
       'https://images.unsplash.com/photo-1522163182402-834f871fd851?auto=format&fit=crop&w=2000&q=80',
     ],
     heritageImages: [
-      'https://images.unsplash.com/photo-1600100397608-f010e42e47e8?auto=format&fit=crop&w=2000&q=80',
-      'https://images.unsplash.com/photo-1599818816829-9e8c47494a86?auto=format&fit=crop&w=2000&q=80',
+      'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=2000&q=80',
+      'https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=2000&q=80',
     ],
     spiritualImages: [
-      'https://images.unsplash.com/photo-1599818816829-9e8c47494a86?auto=format&fit=crop&w=2000&q=80',
+      'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=2000&q=80',
     ],
     adventureImages: [
       'https://images.unsplash.com/photo-1522163182402-834f871fd851?auto=format&fit=crop&w=2000&q=80',
@@ -286,18 +286,18 @@ export const DESTINATION_MEDIA: Record<string, DestinationMediaProfile> = {
       'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80',
     ],
     mapImages: {
-      temple: 'https://images.unsplash.com/photo-1599818816829-9e8c47494a86?auto=format&fit=crop&w=400&q=80',
+      temple: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=400&q=80',
       waterfall: 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=400&q=80',
-      heritage: 'https://images.unsplash.com/photo-1600100397608-f010e42e47e8?auto=format&fit=crop&w=400&q=80',
+      heritage: getAssetPath('/images/destinations/hampi_stone_chariot_hero.jpg'),
       nature: 'https://images.unsplash.com/photo-1522163182402-834f871fd851?auto=format&fit=crop&w=400&q=80',
       hotel: 'https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=400&q=80',
       food: 'https://images.unsplash.com/photo-1589302168068-964664d93dc0?auto=format&fit=crop&w=400&q=80',
     },
     thumbnailImages: [
-      'https://images.unsplash.com/photo-1600100397608-f010e42e47e8?auto=format&fit=crop&w=400&q=80',
+      'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=400&q=80',
     ],
     fallbackImages: [
-      'https://images.unsplash.com/photo-1600100397608-f010e42e47e8?auto=format&fit=crop&w=2560&q=85',
+      getAssetPath('/images/destinations/hampi_stone_chariot_hero.jpg'),
     ],
     crowdOverlayMood: 'heritage-amber',
   },
@@ -338,7 +338,7 @@ export const DESTINATION_MEDIA: Record<string, DestinationMediaProfile> = {
     backgroundImages: [
       'https://images.unsplash.com/photo-1596176530529-78163a4f7af2?auto=format&fit=crop&w=2560&q=85',
       'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2560&q=85',
-      'https://images.unsplash.com/photo-1511497584788-87676104235f?auto=format&fit=crop&w=2560&q=85', // Attukad waterfalls surrounded by tea hills
+      'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=2560&q=85', // Attukad waterfalls surrounded by tea hills
       'https://images.unsplash.com/photo-1506015391300-4802dc74de2e?auto=format&fit=crop&w=2560&q=85', // Winding ghat road through tea valley
     ],
     attractionImages: {
@@ -347,19 +347,19 @@ export const DESTINATION_MEDIA: Record<string, DestinationMediaProfile> = {
       'Meesapulimala Peak': 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80',
       'Chinnar Sanctuary': 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1600&q=80',
       'Marayoor Sandalwood': 'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1600&q=80',
-      'Attukad Waterfalls': 'https://images.unsplash.com/photo-1511497584788-87676104235f?auto=format&fit=crop&w=1600&q=80',
+      'Attukad Waterfalls': 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=1600&q=80',
     },
     hiddenGemImages: {
       'gem-kolukkumalai': 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80',
       'gem-meesapulimala': 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80',
       'gem-chinnar': 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1200&q=80',
       'gem-marayoor': 'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1200&q=80',
-      'gem-attukal': 'https://images.unsplash.com/photo-1511497584788-87676104235f?auto=format&fit=crop&w=1200&q=80',
+      'gem-attukal': 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=1200&q=80',
     },
     natureImages: [
       'https://images.unsplash.com/photo-1596176530529-78163a4f7af2?auto=format&fit=crop&w=2000&q=80',
       'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2000&q=80',
-      'https://images.unsplash.com/photo-1511497584788-87676104235f?auto=format&fit=crop&w=2000&q=80',
+      'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=2000&q=80',
     ],
     heritageImages: [
       'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=2000&q=80',
@@ -392,7 +392,7 @@ export const DESTINATION_MEDIA: Record<string, DestinationMediaProfile> = {
     ],
     mapImages: {
       temple: 'https://images.unsplash.com/photo-1596176530529-78163a4f7af2?auto=format&fit=crop&w=400&q=80',
-      waterfall: 'https://images.unsplash.com/photo-1511497584788-87676104235f?auto=format&fit=crop&w=400&q=80',
+      waterfall: 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=400&q=80',
       heritage: 'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=400&q=80',
       nature: 'https://images.unsplash.com/photo-1596176530529-78163a4f7af2?auto=format&fit=crop&w=400&q=80',
       hotel: 'https://images.unsplash.com/photo-1587061949409-02df41d5e562?auto=format&fit=crop&w=400&q=80',
