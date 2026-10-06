@@ -20,12 +20,14 @@ import { calculateHiddenGemScore } from './scoring';
  * evaluates weather forecasts, and builds complete journeys around hidden gems.
  */
 export function discoverHiddenPlaces(params: DiscoveryParams): DiscoveryResult {
-  const locInput = params.startLocation.toLowerCase().trim();
+  const locInput = (params.startLocation || '').toLowerCase().trim();
 
   // 1. Resolve matching destination hub
   let destination = DESTINATIONS.find(
     (d) =>
       d.slug.toLowerCase() === locInput ||
+      locInput.includes(d.slug.toLowerCase()) ||
+      d.name.toLowerCase() === locInput ||
       d.name.toLowerCase().includes(locInput) ||
       locInput.includes(d.name.toLowerCase()) ||
       d.state.toLowerCase().includes(locInput)
@@ -79,13 +81,28 @@ export function discoverHiddenPlaces(params: DiscoveryParams): DiscoveryResult {
       finalScore = Math.max(30, finalScore - 20);
     }
 
-    // Formulate real computed explanation
-    const whyList = [
-      `Fits ₹${params.budgetInr.toLocaleString('en-IN')} budget comfortably (est. ₹${gem.estimatedCostInr}/person)`,
-      `${gem.crowdData.occupancyPercent}% occupancy (significantly lower crowd than ${destination.mainAttractionName})`,
-      `${gem.travelTimeMinutes} mins travel time from hub`,
-      `${gem.rating}★ rating from verified visitors (${gem.reviewCount} reviews)`,
-    ];
+    // Formulate real computed explanation matching selected passions
+    const matchedPassions =
+      params.selectedInterests && params.selectedInterests.length > 0
+        ? gem.tags.filter((t) =>
+            params.selectedInterests?.some(
+              (si) => si.toLowerCase() === t.toLowerCase()
+            )
+          )
+        : [];
+
+    const whyList: string[] = [];
+    if (matchedPassions.length > 0) {
+      whyList.push(`Tailored for your ${matchedPassions.join(' & ')} passion`);
+    }
+    whyList.push(
+      `Fits ₹${params.budgetInr.toLocaleString('en-IN')} budget comfortably (est. ₹${gem.estimatedCostInr}/person)`
+    );
+    whyList.push(
+      `${gem.crowdData.occupancyPercent}% occupancy (significantly lower crowd than ${destination.mainAttractionName})`
+    );
+    whyList.push(`${gem.travelTimeMinutes} mins travel time from ${destination.name}`);
+    whyList.push(`${gem.rating}★ rating from verified visitors (${gem.reviewCount} reviews)`);
 
     if (gem.accessibility?.seniorFriendly && companion === 'Seniors') {
       whyList.push('Gentle paved access with seating');
@@ -136,7 +153,7 @@ export function discoverHiddenPlaces(params: DiscoveryParams): DiscoveryResult {
     destination.hiddenGems[1];
 
   return {
-    id: `disc-${destination.slug}-${Date.now()}`,
+    id: destination.slug,
     destination,
     params,
     hiddenGems: topGems,

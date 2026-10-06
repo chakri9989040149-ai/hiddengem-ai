@@ -346,14 +346,14 @@ export const DESTINATION_MEDIA: Record<string, DestinationMediaProfile> = {
       'Kolukkumalai Estate': 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1600&q=80',
       'Meesapulimala Peak': 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80',
       'Chinnar Sanctuary': 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1600&q=80',
-      'Marayoor Sandalwood': 'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1600&q=80',
+      'Marayoor Sandalwood': getAssetPath('/images/destinations/munnar_marayoor_sandalwood.jpg'),
       'Attukad Waterfalls': 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=1600&q=80',
     },
     hiddenGemImages: {
       'gem-kolukkumalai': 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80',
       'gem-meesapulimala': 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80',
       'gem-chinnar': 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1200&q=80',
-      'gem-marayoor': 'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1200&q=80',
+      'gem-marayoor': getAssetPath('/images/destinations/munnar_marayoor_sandalwood.jpg'),
       'gem-attukal': 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=1200&q=80',
     },
     natureImages: [
@@ -362,7 +362,7 @@ export const DESTINATION_MEDIA: Record<string, DestinationMediaProfile> = {
       'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=2000&q=80',
     ],
     heritageImages: [
-      'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=2000&q=80',
+      getAssetPath('/images/destinations/munnar_marayoor_sandalwood.jpg'),
     ],
     spiritualImages: [
       'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=2000&q=80',

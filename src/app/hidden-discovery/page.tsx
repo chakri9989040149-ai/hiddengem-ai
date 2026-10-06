@@ -1,25 +1,24 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAppStore } from '@/lib/store';
 import { DESTINATIONS } from '@/lib/data/seed';
 import { discoverHiddenPlaces } from '@/lib/hiddenDiscoveryEngine';
 import { DESTINATION_MEDIA } from '@/lib/destinationVisuals';
+import HiddenDiscoveryResultClient from './[id]/HiddenDiscoveryResultClient';
+import { DiscoveryResult } from '@/types';
 import {
   Sparkles,
   MapPin,
   Wallet,
   Users,
   Calendar,
-  Compass,
   ArrowRight,
-  ShieldCheck,
-  CheckCircle,
-  Dices,
   Radar,
-  Leaf,
+  AlertTriangle,
+  RotateCcw,
 } from 'lucide-react';
 
 const SCAN_STEPS = [
@@ -32,6 +31,26 @@ const SCAN_STEPS = [
   'Verifying safety & accessibility quality gates...',
   '✨ YOUR HIDDEN PLACES ARE READY!',
 ];
+
+/**
+ * Returns destination-specific scanning header text.
+ * Hampi -> "SCANNING HAMPI & KISHKINDHA BOULDERS"
+ * Munnar -> "SCANNING MUNNAR & EASTERN/WESTERN GHATS"
+ * Tirupati -> "SCANNING TIRUPATI & SESHACHALAM SANCTUMS"
+ */
+function getScanningRegionTitle(startLocation: string): string {
+  const loc = (startLocation || '').toLowerCase().trim();
+  if (loc.includes('hampi')) {
+    return 'SCANNING HAMPI & KISHKINDHA BOULDERS';
+  }
+  if (loc.includes('munnar')) {
+    return 'SCANNING MUNNAR & EASTERN/WESTERN GHATS';
+  }
+  if (loc.includes('tirupati')) {
+    return 'SCANNING TIRUPATI & SESHACHALAM SANCTUMS';
+  }
+  return `SCANNING ${startLocation.toUpperCase()} & SURROUNDING SANCTUARIES`;
+}
 
 export default function HiddenDiscoveryInputPage() {
   const router = useRouter();
@@ -56,6 +75,19 @@ export default function HiddenDiscoveryInputPage() {
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
   const [isScanning, setIsScanning] = useState(false);
   const [scanStepIndex, setScanStepIndex] = useState(0);
+  const [discoveryResult, setDiscoveryResult] = useState<DiscoveryResult | null>(null);
+  const [discoveryError, setDiscoveryError] = useState<string | null>(null);
+
+  // Sync browser back navigation
+  useEffect(() => {
+    const handlePopState = () => {
+      if (discoveryResult) {
+        setDiscoveryResult(null);
+      }
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [discoveryResult]);
 
   const interestOptions = [
     'Nature',
@@ -76,26 +108,26 @@ export default function HiddenDiscoveryInputPage() {
     );
   };
 
-  const handleDiscover = () => {
+  const handleDiscover = async () => {
+    // 1. Reset states
+    setDiscoveryError(null);
+    setDiscoveryResult(null);
     setIsScanning(true);
     setScanStepIndex(0);
 
-    // Step-by-step radar animation
+    // 2. Animate intermediate scanning steps 0 through 6
+    let currentStep = 0;
+    const maxScanStep = SCAN_STEPS.length - 2; // index 6 is the last intermediate scan step
     const interval = setInterval(() => {
-      setScanStepIndex((prev) => {
-        if (prev < SCAN_STEPS.length - 1) {
-          return prev + 1;
-        } else {
-          clearInterval(interval);
-          return prev;
-        }
-      });
-    }, 450);
+      if (currentStep < maxScanStep) {
+        currentStep += 1;
+        setScanStepIndex(currentStep);
+      }
+    }, 280);
 
-    setTimeout(() => {
-      clearInterval(interval);
-
-      // Run Hidden Discovery Engine
+    try {
+      // 3. Actually execute Discovery recommendation engine
+      const startTime = Date.now();
       const result = discoverHiddenPlaces({
         startLocation,
         budgetInr: budget,
@@ -105,6 +137,30 @@ export default function HiddenDiscoveryInputPage() {
         selectedInterests,
       });
 
+      // 4. Validate results
+      if (
+        !result ||
+        !result.destination ||
+        !Array.isArray(result.hiddenGems) ||
+        result.hiddenGems.length === 0
+      ) {
+        throw new Error("WE COULDN'T FIND YOUR HIDDEN PLACES");
+      }
+
+      // Ensure scanning animation has played through adequately (minimum 1.8s)
+      const elapsed = Date.now() - startTime;
+      const remainingWait = Math.max(0, 1800 - elapsed);
+      await new Promise((res) => setTimeout(res, remainingWait));
+
+      clearInterval(interval);
+
+      // 5. ONLY NOW show "✨ YOUR HIDDEN PLACES ARE READY!" (index 7)
+      setScanStepIndex(SCAN_STEPS.length - 1);
+
+      // Brief confirmation view (600ms)
+      await new Promise((res) => setTimeout(res, 600));
+
+      // 6. Store results into state & store
       setActiveDiscovery(result);
       setSelectedDestinationSlug(result.destination.slug);
       updatePreferences({
@@ -112,13 +168,47 @@ export default function HiddenDiscoveryInputPage() {
         totalBudgetInr: budget,
         groupSize: travellers,
         durationDays: days,
+        interests: selectedInterests.length > 0 ? (selectedInterests as any) : undefined,
       });
 
-      router.push(`/hidden-discovery/${result.id}`);
-    }, SCAN_STEPS.length * 480);
+      // Update URL cleanly without full reload
+      if (typeof window !== 'undefined') {
+        const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+        const targetUrl = `${basePath}/hidden-discovery/${result.id}/`;
+        window.history.pushState({ discoveryId: result.id }, '', targetUrl);
+      }
+
+      setDiscoveryResult(result);
+      setIsScanning(false);
+    } catch (err: any) {
+      clearInterval(interval);
+      setIsScanning(false);
+      setDiscoveryError(
+        err?.message === "WE COULDN'T FIND YOUR HIDDEN PLACES"
+          ? "WE COULDN'T FIND YOUR HIDDEN PLACES"
+          : "WE COULDN'T FIND YOUR HIDDEN PLACES"
+      );
+    }
   };
 
-  const activeMedia = DESTINATION_MEDIA[selectedDestinationSlug] || DESTINATION_MEDIA.tirupati;
+  // If results are available and not scanning, show full interactive results view!
+  if (discoveryResult && !isScanning) {
+    return (
+      <div className="space-y-6">
+        <HiddenDiscoveryResultClient
+          id={discoveryResult.id}
+          initialDiscovery={discoveryResult}
+          onResetSearch={() => {
+            setDiscoveryResult(null);
+            if (typeof window !== 'undefined') {
+              const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+              window.history.pushState(null, '', `${basePath}/hidden-discovery/`);
+            }
+          }}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10 pb-28 select-none">
@@ -136,9 +226,41 @@ export default function HiddenDiscoveryInputPage() {
         </p>
       </div>
 
+      {/* Error state if discovery failed */}
+      {discoveryError && !isScanning && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="rounded-3xl border border-rose-500/40 backdrop-blur-2xl bg-stone-950/90 text-white p-8 sm:p-12 text-center space-y-6 shadow-2xl"
+        >
+          <div className="w-16 h-16 mx-auto rounded-2xl bg-rose-900/60 border border-rose-500/50 flex items-center justify-center">
+            <AlertTriangle className="w-8 h-8 text-rose-400" />
+          </div>
+          <div className="space-y-2 max-w-md mx-auto">
+            <span className="text-xs uppercase font-extrabold tracking-widest text-rose-400 block">
+              Discovery Notice
+            </span>
+            <h3 className="text-2xl font-black text-white">
+              WE COULDN&apos;T FIND YOUR HIDDEN PLACES
+            </h3>
+            <p className="text-sm text-stone-300">
+              We couldn&apos;t locate safe, accessible hidden gems for your exact criteria. Please try broadening your budget or selecting an alternative starting hub.
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={() => setDiscoveryError(null)}
+            className="px-6 py-3 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-sm shadow-lg inline-flex items-center gap-2 transition-all hover:scale-105"
+          >
+            <RotateCcw className="w-4 h-4" />
+            <span>Try Again</span>
+          </button>
+        </motion.div>
+      )}
+
       {/* Main Form or Scanning State */}
       <AnimatePresence mode="wait">
-        {!isScanning ? (
+        {!isScanning && !discoveryError ? (
           <motion.div
             key="input-form"
             initial={{ opacity: 0, y: 15 }}
@@ -308,7 +430,7 @@ export default function HiddenDiscoveryInputPage() {
               </button>
             </div>
           </motion.div>
-        ) : (
+        ) : isScanning ? (
           /* Radar Discovery Scanning Animation */
           <motion.div
             key="scanning-state"
@@ -324,7 +446,7 @@ export default function HiddenDiscoveryInputPage() {
 
             <div className="space-y-2 max-w-md mx-auto">
               <span className="text-xs uppercase font-extrabold tracking-widest text-emerald-400 block">
-                Scanning {startLocation} &amp; Eastern/Western Ghats
+                {getScanningRegionTitle(startLocation)}
               </span>
               <h3 className="text-xl sm:text-2xl font-black text-white">
                 {SCAN_STEPS[scanStepIndex]}
@@ -340,7 +462,7 @@ export default function HiddenDiscoveryInputPage() {
               />
             </div>
           </motion.div>
-        )}
+        ) : null}
       </AnimatePresence>
     </div>
   );

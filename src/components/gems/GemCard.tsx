@@ -51,8 +51,11 @@ export function GemCard({ gem, score, onOpenDetails, onViewOnMap }: GemCardProps
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             loading="lazy"
             onError={(e) => {
+              e.currentTarget.onerror = null;
               const fallback =
-                gem.destinationSlug === 'munnar'
+                gem.id === 'gem-marayoor'
+                  ? getAssetPath('/images/destinations/munnar_marayoor_sandalwood.jpg')
+                  : gem.destinationSlug === 'munnar'
                   ? getAssetPath('/images/destinations/munnar_tea_hills.jpg')
                   : gem.destinationSlug === 'hampi'
                   ? getAssetPath('/images/destinations/hampi_stone_chariot_hero.jpg')

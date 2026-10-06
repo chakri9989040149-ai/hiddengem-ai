@@ -10,7 +10,7 @@ import { DESTINATION_MEDIA } from '@/lib/destinationVisuals';
 import { GemDetailsModal } from '@/components/gems/GemDetailsModal';
 import { TravelMap } from '@/components/map/TravelMap';
 import { formatCurrency, getAssetPath } from '@/lib/utils';
-import { HiddenGem } from '@/types';
+import { HiddenGem, DiscoveryResult } from '@/types';
 import {
   MapPin,
   Clock,
@@ -22,10 +22,16 @@ import {
 } from 'lucide-react';
 
 interface HiddenDiscoveryResultClientProps {
-  id: string;
+  id?: string;
+  initialDiscovery?: DiscoveryResult | null;
+  onResetSearch?: () => void;
 }
 
-export default function HiddenDiscoveryResultClient({ id }: HiddenDiscoveryResultClientProps) {
+export default function HiddenDiscoveryResultClient({
+  id = 'latest',
+  initialDiscovery,
+  onResetSearch,
+}: HiddenDiscoveryResultClientProps) {
   const router = useRouter();
 
   const {
@@ -42,17 +48,19 @@ export default function HiddenDiscoveryResultClient({ id }: HiddenDiscoveryResul
   const [isSurpriseRevealed, setIsSurpriseRevealed] = useState(false);
   const [surpriseGem, setSurpriseGem] = useState<HiddenGem | null>(null);
   const [expandedBreakdownId, setExpandedBreakdownId] = useState<string | null>(null);
+  const [addedGemId, setAddedGemId] = useState<string | null>(null);
 
   // Restore or generate discovery result if directly loaded
   const discovery =
-    activeDiscovery && activeDiscovery.id === id
+    initialDiscovery ||
+    (activeDiscovery && (activeDiscovery.id === id || activeDiscovery.destination.slug === id)
       ? activeDiscovery
       : discoverHiddenPlaces({
-          startLocation: selectedDestinationSlug || 'Tirupati',
+          startLocation: id && id !== 'latest' && id !== 'demo' ? id : selectedDestinationSlug || 'Tirupati',
           budgetInr: 10000,
           travellersCount: 4,
           durationDays: 2,
-        });
+        }));
 
   const dest = discovery.destination;
   const currentPred = getCrowdPrediction(dest.slug);
@@ -77,7 +85,7 @@ export default function HiddenDiscoveryResultClient({ id }: HiddenDiscoveryResul
 
   const handleBuildJourney = () => {
     // Add top 3 gems to trip
-    discovery.hiddenGems.slice(0, 3).forEach(({ gem }) => {
+    discovery.hiddenGems.slice(0, 3).forEach(({ gem }: { gem: HiddenGem }) => {
       addGemToTrip(gem);
     });
 
@@ -106,14 +114,23 @@ export default function HiddenDiscoveryResultClient({ id }: HiddenDiscoveryResul
         <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/40 to-transparent" />
 
         <div className="relative z-10 w-full flex flex-col sm:flex-row sm:items-end justify-between gap-6 text-white">
-          <div className="space-y-2 max-w-2xl">
+          <div className="space-y-3 max-w-2xl">
             <div className="flex flex-wrap items-center gap-2">
               <span className="px-3.5 py-1 rounded-full bg-emerald-600/90 text-white font-black text-xs uppercase tracking-wider backdrop-blur-md shadow">
-                💎 DISCOVER MY HIDDEN PLACES
+                ✨ Hidden Places Found
               </span>
               <span className="px-3.5 py-1 rounded-full bg-stone-900/80 text-emerald-300 text-xs font-bold backdrop-blur-md">
-                Hub: {dest.name}, {dest.state}
+                {dest.name} • ₹{discovery.params.budgetInr.toLocaleString('en-IN')} • {discovery.params.travellersCount} Travellers • {discovery.params.durationDays} Days
               </span>
+              {onResetSearch ? (
+                <button
+                  type="button"
+                  onClick={onResetSearch}
+                  className="px-3 py-1 rounded-full bg-white/20 hover:bg-white text-white hover:text-stone-950 text-xs font-bold backdrop-blur-md transition-all ml-auto"
+                >
+                  ← Change Filters
+                </button>
+              ) : null}
             </div>
 
             <h1 className="text-3xl sm:text-5xl font-black tracking-tight drop-shadow-md">
@@ -222,8 +239,11 @@ export default function HiddenDiscoveryResultClient({ id }: HiddenDiscoveryResul
                     alt={gem.name}
                     className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 brightness-[0.9]"
                     onError={(e) => {
+                      e.currentTarget.onerror = null;
                       const fallback =
-                        gem.destinationSlug === 'munnar'
+                        gem.id === 'gem-marayoor'
+                          ? getAssetPath('/images/destinations/munnar_marayoor_sandalwood.jpg')
+                          : gem.destinationSlug === 'munnar'
                           ? getAssetPath('/images/destinations/munnar_tea_hills.jpg')
                           : gem.destinationSlug === 'hampi'
                           ? getAssetPath('/images/destinations/hampi_stone_chariot_hero.jpg')
@@ -256,105 +276,157 @@ export default function HiddenDiscoveryResultClient({ id }: HiddenDiscoveryResul
                   </div>
                 </div>
 
-                {/* Content */}
-                <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between text-xs text-stone-500">
-                      <span className="font-extrabold uppercase text-emerald-700 dark:text-emerald-400">
-                        {gem.category}
-                      </span>
-                      <span className="flex items-center gap-1 text-amber-500 font-bold">
-                        <Star className="w-3.5 h-3.5 fill-current" />
-                        <span>{gem.rating} ({gem.reviewCount})</span>
-                      </span>
+                  {/* Content */}
+                  <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between text-xs text-stone-500">
+                        <span className="font-extrabold uppercase text-emerald-700 dark:text-emerald-400">
+                          {gem.category}
+                        </span>
+                        <span className="flex items-center gap-1 text-amber-500 font-bold">
+                          <Star className="w-3.5 h-3.5 fill-current" />
+                          <span>{gem.rating} ({gem.reviewCount})</span>
+                        </span>
+                      </div>
+
+                      <h3 className="text-xl font-black text-stone-900 dark:text-stone-100 group-hover:text-emerald-600 transition-colors">
+                        {gem.name}
+                      </h3>
+                      <p className="text-xs text-stone-600 dark:text-stone-300 leading-relaxed font-medium line-clamp-2">
+                        {gem.subtitle}
+                      </p>
+
+                      {/* Passion & Feature Tags */}
+                      <div className="flex flex-wrap gap-1.5 pt-1">
+                        {gem.tags.map((tag: string) => (
+                          <span
+                            key={tag}
+                            className="px-2 py-0.5 rounded-md bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-400 text-[10px] font-bold"
+                          >
+                            #{tag}
+                          </span>
+                        ))}
+                      </div>
                     </div>
 
-                    <h3 className="text-xl font-black text-stone-900 dark:text-stone-100 group-hover:text-emerald-600 transition-colors">
-                      {gem.name}
-                    </h3>
-                    <p className="text-xs text-stone-600 dark:text-stone-300 leading-relaxed font-medium line-clamp-2">
-                      {gem.subtitle}
-                    </p>
-                  </div>
+                    {/* AI Why This Place Is Special */}
+                    <div className="p-3.5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/60 text-[11px] space-y-1">
+                      <span className="font-black text-emerald-800 dark:text-emerald-300 uppercase tracking-wider block">
+                        ✨ Why this place is special:
+                      </span>
+                      <p className="text-stone-700 dark:text-stone-300 leading-relaxed font-medium">
+                        {recommendationReason}
+                      </p>
+                    </div>
 
-                  {/* AI Why We Recommend It */}
-                  <div className="p-3 rounded-2xl bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/60 text-[11px] space-y-1">
-                    <span className="font-black text-emerald-800 dark:text-emerald-300 uppercase tracking-wider block">
-                      Why We Recommend It:
-                    </span>
-                    <p className="text-stone-700 dark:text-stone-300 leading-relaxed">
-                      {recommendationReason}
-                    </p>
-                  </div>
-
-                  {/* Score Breakdown Toggle */}
-                  <div>
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setExpandedBreakdownId(expandedBreakdownId === gem.id ? null : gem.id)
-                      }
-                      className="text-[11px] font-bold text-stone-500 hover:text-emerald-600 flex items-center justify-between w-full pt-1"
-                    >
-                      <span>Explainable Score Breakdown (100% Metric)</span>
-                      <ChevronDown
-                        className={`w-3.5 h-3.5 transition-transform ${
-                          expandedBreakdownId === gem.id ? 'rotate-180' : ''
-                        }`}
-                      />
-                    </button>
-
-                    {expandedBreakdownId === gem.id && (
-                      <div className="mt-2.5 p-3 rounded-xl bg-stone-50 dark:bg-stone-800/60 border border-stone-200 dark:border-stone-700 space-y-1.5 text-[10px]">
-                        <div className="flex justify-between">
-                          <span>Interest Match (30%):</span>
-                          <span className="font-bold text-emerald-600">{breakdown.interestMatch} / 30</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>Travel Time (20%):</span>
-                          <span className="font-bold text-emerald-600">{breakdown.travelTimeScore} / 20</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>Crowd Headroom (20%):</span>
-                          <span className="font-bold text-emerald-600">{breakdown.crowdHeadroomScore} / 20</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>Rating (10%):</span>
-                          <span className="font-bold text-emerald-600">{breakdown.ratingScore} / 10</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>Availability (10%):</span>
-                          <span className="font-bold text-emerald-600">{breakdown.availabilityScore} / 10</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>Budget Fit (10%):</span>
-                          <span className="font-bold text-emerald-600">{breakdown.budgetFitScore} / 10</span>
-                        </div>
+                    {/* Quick Specs: Estimated Cost, Distance, Best Time */}
+                    <div className="grid grid-cols-2 gap-2 text-[11px] p-2.5 rounded-2xl bg-stone-50 dark:bg-stone-800/40 border border-stone-200/60 dark:border-stone-700/60">
+                      <div>
+                        <span className="text-stone-400 block text-[10px] font-bold uppercase tracking-wider">
+                          Estimated Cost
+                        </span>
+                        <span className="font-black text-emerald-600 dark:text-emerald-400">
+                          {gem.estimatedCostInr === 0 ? 'Free Entry' : `₹${gem.estimatedCostInr} / person`}
+                        </span>
                       </div>
-                    )}
-                  </div>
+                      <div>
+                        <span className="text-stone-400 block text-[10px] font-bold uppercase tracking-wider">
+                          Distance from {dest.name}
+                        </span>
+                        <span className="font-bold text-stone-700 dark:text-stone-300">
+                          {gem.distanceFromMainKm} km ({gem.travelTimeMinutes} mins)
+                        </span>
+                      </div>
+                      <div className="col-span-2 pt-1 border-t border-stone-200/50 dark:border-stone-700/50">
+                        <span className="text-stone-400 block text-[10px] font-bold uppercase tracking-wider">
+                          Best Time to Visit
+                        </span>
+                        <span className="font-bold text-stone-700 dark:text-stone-300 truncate block">
+                          {gem.bestTimeToVisit || 'Early morning or golden hour sunset'}
+                        </span>
+                      </div>
+                    </div>
 
-                  {/* Actions */}
-                  <div className="pt-3 border-t border-stone-100 dark:border-stone-800 grid grid-cols-2 gap-2">
-                    <button
-                      type="button"
-                      onClick={() => setActiveModalGem(gem)}
-                      className="px-3 py-2 rounded-xl bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 text-stone-800 dark:text-stone-200 font-extrabold text-xs text-center transition-colors"
-                    >
-                      Explore Details
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        addGemToTrip(gem);
-                        alert(`Added ${gem.name} to your journey!`);
-                      }}
-                      className="px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs text-center shadow transition-colors"
-                    >
-                      Add to Journey
-                    </button>
+                    {/* Score Breakdown Toggle */}
+                    <div>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setExpandedBreakdownId(expandedBreakdownId === gem.id ? null : gem.id)
+                        }
+                        className="text-[11px] font-bold text-stone-500 hover:text-emerald-600 flex items-center justify-between w-full pt-1"
+                      >
+                        <span>Explainable Score Breakdown (100% Metric)</span>
+                        <ChevronDown
+                          className={`w-3.5 h-3.5 transition-transform ${
+                            expandedBreakdownId === gem.id ? 'rotate-180' : ''
+                          }`}
+                        />
+                      </button>
+
+                      {expandedBreakdownId === gem.id && (
+                        <div className="mt-2.5 p-3 rounded-xl bg-stone-50 dark:bg-stone-800/60 border border-stone-200 dark:border-stone-700 space-y-1.5 text-[10px]">
+                          <div className="flex justify-between">
+                            <span>Interest Match (30%):</span>
+                            <span className="font-bold text-emerald-600">{breakdown.interestMatch} / 30</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Travel Time (20%):</span>
+                            <span className="font-bold text-emerald-600">{breakdown.travelTimeScore} / 20</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Crowd Headroom (20%):</span>
+                            <span className="font-bold text-emerald-600">{breakdown.crowdHeadroomScore} / 20</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Rating (10%):</span>
+                            <span className="font-bold text-emerald-600">{breakdown.ratingScore} / 10</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Availability (10%):</span>
+                            <span className="font-bold text-emerald-600">{breakdown.availabilityScore} / 10</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Budget Fit (10%):</span>
+                            <span className="font-bold text-emerald-600">{breakdown.budgetFitScore} / 10</span>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Action Buttons: VIEW DETAILS | ADD TO TRIP | VIEW MAP */}
+                    <div className="pt-3 border-t border-stone-100 dark:border-stone-800 grid grid-cols-3 gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setActiveModalGem(gem)}
+                        className="px-2.5 py-2.5 rounded-xl bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 text-stone-800 dark:text-stone-200 font-black text-[11px] text-center transition-all"
+                      >
+                        VIEW DETAILS
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          addGemToTrip(gem);
+                          setAddedGemId(gem.id);
+                          setTimeout(() => setAddedGemId(null), 2500);
+                        }}
+                        className={`px-2.5 py-2.5 rounded-xl text-white font-black text-[11px] text-center shadow transition-all ${
+                          addedGemId === gem.id
+                            ? 'bg-emerald-700 scale-98'
+                            : 'bg-emerald-600 hover:bg-emerald-500'
+                        }`}
+                      >
+                        {addedGemId === gem.id ? '✓ ADDED' : 'ADD TO TRIP'}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setActiveTab('map')}
+                        className="px-2.5 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-black text-[11px] text-center shadow transition-all"
+                      >
+                        VIEW MAP
+                      </button>
+                    </div>
                   </div>
-                </div>
               </div>
             ))}
           </div>

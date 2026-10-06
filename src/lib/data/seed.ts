@@ -1171,8 +1171,8 @@ export const DESTINATIONS: Destination[] = [
         estimatedCostInr: 50,
         ecoScore: 97,
         images: [
-          'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1200&q=80',
-          'https://images.unsplash.com/photo-1596176530529-78163a4f7af2?auto=format&fit=crop&w=1200&q=80',
+          getAssetPath('/images/destinations/munnar_marayoor_sandalwood.jpg'),
+          getAssetPath('/images/destinations/munnar_tea_hills.jpg'),
         ],
         description:
           'Enveloped in the gentle aroma of over 60,000 wild sandalwood trees, Marayoor is famed for organic solid sugarcane jaggery (Marayoor Sharkkara) prepared right before your eyes in traditional boiling pans, alongside prehistoric stone dolmens.',

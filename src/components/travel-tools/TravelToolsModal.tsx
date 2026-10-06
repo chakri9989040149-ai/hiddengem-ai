@@ -42,7 +42,7 @@ import {
 } from 'lucide-react';
 
 import { useAppStore } from '@/lib/store';
-import { formatCurrency } from '@/lib/utils';
+import { formatCurrency, getAssetPath } from '@/lib/utils';
 import {
   TravelToolMode,
   DESTINATION_TRANSIT_HUBS,
@@ -2090,6 +2090,16 @@ export function TravelToolsModal({ isOpen, onClose, initialMode = 'trains' }: Tr
                           src={site.image}
                           alt={site.name}
                           className="w-24 h-24 rounded-2xl object-cover border border-white/10 shrink-0"
+                          onError={(e) => {
+                            e.currentTarget.onerror = null;
+                            e.currentTarget.src = getAssetPath(
+                              site.destinationSlug === 'munnar'
+                                ? '/images/destinations/munnar_tea_hills.jpg'
+                                : site.destinationSlug === 'hampi'
+                                ? '/images/destinations/hampi_stone_chariot_hero.jpg'
+                                : '/images/destinations/tirupati_seshachalam_hills.jpg'
+                            );
+                          }}
                         />
                         <div>
                           <div className="flex items-center gap-2">

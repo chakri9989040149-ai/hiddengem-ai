@@ -1078,7 +1078,12 @@ export function searchHeritage(req: HeritageSearchRequest): {
       name: destSlug === 'tirupati' ? 'Chandragiri 11th-Century Vijayanagara Fort & Raja Mahal' : destSlug === 'hampi' ? 'Vittala Temple Complex & Stone Chariot' : 'Marayoor Prehistoric Dolmens & Sandalwood Heritage',
       destinationSlug: destSlug,
       category: destSlug === 'tirupati' ? 'Forts' : 'Ancient Ruins',
-      image: destSlug === 'tirupati' ? 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=800&q=80' : getAssetPath('/images/destinations/hampi_stone_chariot_hero.jpg'),
+      image:
+        destSlug === 'tirupati'
+          ? 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=800&q=80'
+          : destSlug === 'munnar'
+          ? getAssetPath('/images/destinations/munnar_marayoor_sandalwood.jpg')
+          : getAssetPath('/images/destinations/hampi_stone_chariot_hero.jpg'),
       historicalPeriod: destSlug === 'tirupati' ? '11th Century CE (Yadava Rayas & Vijayanagara Empire)' : '15th Century CE (King Devaraya II)',
       distanceKm: destSlug === 'tirupati' ? 14 : 3.5,
       travelTimeFormatted: destSlug === 'tirupati' ? '22 minutes' : '8 minutes',
