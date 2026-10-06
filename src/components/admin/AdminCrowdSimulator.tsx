@@ -431,13 +431,13 @@ export function AdminCrowdSimulator() {
             </div>
 
             <div>
-              <label className="block text-stone-600 dark:text-stone-400 font-medium mb-1">
+              <label className="block text-stone-700 dark:text-stone-300 font-bold mb-1">
                 Destination
               </label>
               <select
                 value={newGuideDest}
                 onChange={(e) => setNewGuideDest(e.target.value)}
-                className="w-full p-2 rounded-xl border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-900"
+                className="w-full p-2 rounded-xl border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 font-semibold"
               >
                 {DESTINATIONS.map((d) => (
                   <option key={d.slug} value={d.slug}>

@@ -32,29 +32,29 @@ export function Footer() {
             <h4 className="text-xs font-bold uppercase tracking-wider text-stone-900 dark:text-stone-100 mb-4">
               Explore Destinations
             </h4>
-            <ul className="space-y-2.5 text-sm text-stone-700 dark:text-stone-300">
+            <ul className="space-y-2.5 text-sm text-stone-700 dark:text-stone-200">
               <li>
-                <Link href="/destination/tirupati" className="hover:text-emerald-600 transition-colors">
+                <Link href="/destination/tirupati" className="hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors">
                   Tirupati & Seshachalam Valleys
                 </Link>
               </li>
               <li>
-                <Link href="/destination/hampi" className="hover:text-emerald-600 transition-colors">
+                <Link href="/destination/hampi" className="hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors">
                   Hampi & Kishkindha Boulders
                 </Link>
               </li>
               <li>
-                <Link href="/destination/munnar" className="hover:text-emerald-600 transition-colors">
+                <Link href="/destination/munnar" className="hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors">
                   Munnar & Western Ghats Peaks
                 </Link>
               </li>
               <li>
-                <Link href="/explore" className="hover:text-emerald-600 transition-colors">
+                <Link href="/explore" className="hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors">
                   Interactive GIS Map Explorer
                 </Link>
               </li>
               <li>
-                <Link href="/surprise-me" className="hover:text-emerald-600 transition-colors">
+                <Link href="/surprise-me" className="hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors">
                   🎲 Surprise Me Serendipity
                 </Link>
               </li>
@@ -66,29 +66,29 @@ export function Footer() {
             <h4 className="text-xs font-bold uppercase tracking-wider text-stone-900 dark:text-stone-100 mb-4">
               Platform & Demo
             </h4>
-            <ul className="space-y-2.5 text-sm text-stone-700 dark:text-stone-300">
+            <ul className="space-y-2.5 text-sm text-stone-700 dark:text-stone-200">
               <li>
                 <Link href="/admin" className="text-amber-800 dark:text-amber-300 font-semibold hover:underline">
                   ⚙ Admin Crowd Simulator
                 </Link>
               </li>
               <li>
-                <Link href="/plan-trip" className="hover:text-emerald-600 transition-colors">
+                <Link href="/plan-trip" className="hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors">
                   Itinerary & Budget Builder
                 </Link>
               </li>
               <li>
-                <Link href="/ai-agent" className="hover:text-emerald-600 transition-colors">
+                <Link href="/ai-agent" className="hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors">
                   AI Travel Agent Assistant
                 </Link>
               </li>
               <li>
-                <Link href="/passport" className="hover:text-emerald-600 transition-colors">
+                <Link href="/passport" className="hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors">
                   Travel Passport & Badges
                 </Link>
               </li>
               <li>
-                <Link href="/verify" className="hover:text-emerald-600 transition-colors">
+                <Link href="/verify" className="hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors">
                   Identity Verification Sandbox
                 </Link>
               </li>

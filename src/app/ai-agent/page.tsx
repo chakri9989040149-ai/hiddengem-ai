@@ -249,7 +249,7 @@ export default function AIAgentPage() {
               <button
                 key={i}
                 onClick={() => handleSend(cmd)}
-                className="whitespace-nowrap px-3 py-1 rounded-full bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 hover:border-emerald-500 text-stone-700 dark:text-stone-300 font-medium transition-colors"
+                className="whitespace-nowrap px-3 py-1 rounded-full bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 hover:border-emerald-500 text-stone-800 dark:text-stone-200 font-semibold transition-colors"
               >
                 {cmd}
               </button>
@@ -264,7 +264,7 @@ export default function AIAgentPage() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-              className="flex-1 p-3 rounded-2xl border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-900 dark:text-stone-100 text-xs sm:text-sm focus:outline-none focus:ring-1 focus:ring-emerald-600"
+              className="flex-1 p-3 rounded-2xl border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-900 dark:text-stone-100 text-xs sm:text-sm focus:outline-none focus:ring-1 focus:ring-emerald-600 placeholder:text-stone-400"
             />
             <button
               onClick={() => handleSend()}

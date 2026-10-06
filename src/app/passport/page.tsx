@@ -68,7 +68,7 @@ export default function PassportPage() {
           <h1 className="text-3xl sm:text-5xl font-black text-stone-900 dark:text-stone-100 tracking-tight mt-1">
             Explorer Credentials & Badges
           </h1>
-          <p className="text-xs sm:text-sm text-stone-600 dark:text-stone-400 mt-1">
+          <p className="text-xs sm:text-sm text-stone-700 dark:text-stone-300 mt-1">
             Your verified records of off-beat discoveries, low-carbon itineraries, and responsible tourism.
           </p>
         </div>
@@ -82,7 +82,7 @@ export default function PassportPage() {
             <span className="font-extrabold text-stone-900 dark:text-stone-100 block">
               Identity Verified ✓
             </span>
-            <span className="text-[11px] text-stone-500">
+            <span className="text-[11px] text-stone-600 dark:text-stone-400 font-medium">
               {verifiedDocType || 'Aadhaar (Mock Sandbox)'}
             </span>
           </div>
@@ -92,35 +92,35 @@ export default function PassportPage() {
       {/* Profile Overview Stats */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         <div className="p-5 rounded-3xl border border-stone-200 dark:border-stone-800 bg-white/80 dark:bg-stone-900/80 backdrop-blur-md shadow-sm space-y-1">
-          <span className="text-[11px] text-stone-400 uppercase font-extrabold">Hidden Gems Discovered</span>
+          <span className="text-[11px] text-stone-600 dark:text-stone-300 uppercase font-black">Hidden Gems Discovered</span>
           <span className="text-3xl font-black text-emerald-600 dark:text-emerald-400 block">
             {gemsDiscoveredCount}
           </span>
-          <span className="text-[10px] text-stone-500 font-medium">Beyond mass tourist traps</span>
+          <span className="text-[10px] text-stone-600 dark:text-stone-400 font-medium">Beyond mass tourist traps</span>
         </div>
 
         <div className="p-5 rounded-3xl border border-stone-200 dark:border-stone-800 bg-white/80 dark:bg-stone-900/80 backdrop-blur-md shadow-sm space-y-1">
-          <span className="text-[11px] text-stone-400 uppercase font-extrabold">Unlocked Badges</span>
+          <span className="text-[11px] text-stone-600 dark:text-stone-300 uppercase font-black">Unlocked Badges</span>
           <span className="text-3xl font-black text-stone-900 dark:text-stone-100 block">
             {totalBadgesUnlocked} / {badges.length}
           </span>
-          <span className="text-[10px] text-stone-500 font-medium">Milestone achievements</span>
+          <span className="text-[10px] text-stone-600 dark:text-stone-400 font-medium">Milestone achievements</span>
         </div>
 
         <div className="p-5 rounded-3xl border border-stone-200 dark:border-stone-800 bg-white/80 dark:bg-stone-900/80 backdrop-blur-md shadow-sm space-y-1">
-          <span className="text-[11px] text-stone-400 uppercase font-extrabold">Eco Travel Score</span>
+          <span className="text-[11px] text-stone-600 dark:text-stone-300 uppercase font-black">Eco Travel Score</span>
           <span className="text-3xl font-black text-emerald-600 block">
             {ecoPoints} 🌱
           </span>
-          <span className="text-[10px] text-stone-500 font-medium">Rail & low-carbon transit</span>
+          <span className="text-[10px] text-stone-600 dark:text-stone-400 font-medium">Rail & low-carbon transit</span>
         </div>
 
         <div className="p-5 rounded-3xl border border-stone-200 dark:border-stone-800 bg-white/80 dark:bg-stone-900/80 backdrop-blur-md shadow-sm space-y-1">
-          <span className="text-[11px] text-stone-400 uppercase font-extrabold">Explorer Rank</span>
+          <span className="text-[11px] text-stone-600 dark:text-stone-300 uppercase font-black">Explorer Rank</span>
           <span className="text-3xl font-black text-amber-500 block">
             Trailblazer
           </span>
-          <span className="text-[10px] text-stone-500 font-medium">Top 5% mindful travellers</span>
+          <span className="text-[10px] text-stone-600 dark:text-stone-400 font-medium">Top 5% mindful travellers</span>
         </div>
       </div>
 

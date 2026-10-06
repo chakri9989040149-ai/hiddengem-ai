@@ -82,7 +82,7 @@ export default function MyTripsPage() {
           <h1 className="text-3xl sm:text-4xl font-extrabold text-stone-900 dark:text-stone-100 tracking-tight mt-1">
             My Trips & Saved Itineraries
           </h1>
-          <p className="text-xs sm:text-sm text-stone-600 dark:text-stone-400 mt-0.5">
+          <p className="text-xs sm:text-sm text-stone-700 dark:text-stone-300 mt-0.5">
             Manage your past and upcoming uncrowded excursions, eco scores, and group expenses.
           </p>
         </div>
@@ -140,26 +140,26 @@ export default function MyTripsPage() {
                   </h3>
                 </div>
 
-                <div className="grid grid-cols-2 gap-2 text-xs text-stone-600 dark:text-stone-400 py-2 border-y border-stone-100 dark:border-stone-800">
+                <div className="grid grid-cols-2 gap-2 text-xs text-stone-700 dark:text-stone-300 py-2 border-y border-stone-100 dark:border-stone-800 font-medium">
                   <div className="flex items-center gap-1.5">
-                    <Calendar className="w-3.5 h-3.5 text-stone-400" />
+                    <Calendar className="w-3.5 h-3.5 text-stone-500 dark:text-stone-400" />
                     <span className="truncate">{trip.dates}</span>
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <Users className="w-3.5 h-3.5 text-stone-400" />
+                    <Users className="w-3.5 h-3.5 text-stone-500 dark:text-stone-400" />
                     <span>{trip.people} Travellers</span>
                   </div>
                 </div>
 
                 <div>
-                  <span className="text-[10px] uppercase font-bold text-stone-400 block mb-1">
+                  <span className="text-[10px] uppercase font-black text-stone-600 dark:text-stone-300 block mb-1">
                     Included Hidden Gems ({trip.gemsCount})
                   </span>
                   <div className="flex flex-wrap gap-1">
                     {trip.gemsNames.map((name, i) => (
                       <span
                         key={i}
-                        className="px-2 py-0.5 rounded-md bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 text-[10px] font-semibold"
+                        className="px-2 py-0.5 rounded-md bg-stone-100 dark:bg-stone-800 text-stone-800 dark:text-stone-200 text-[10px] font-semibold border border-stone-200/50 dark:border-stone-700/50"
                       >
                         {name}
                       </span>
@@ -173,7 +173,7 @@ export default function MyTripsPage() {
             <div className="p-5 pt-0">
               <div className="pt-3 border-t border-stone-100 dark:border-stone-800 flex items-center justify-between">
                 <div>
-                  <span className="text-[10px] text-stone-400 block uppercase">Est. Outlay</span>
+                  <span className="text-[10px] text-stone-500 dark:text-stone-400 block uppercase font-bold">Est. Outlay</span>
                   <span className="font-extrabold text-sm text-stone-900 dark:text-stone-100">
                     {formatCurrency(trip.cost)}
                   </span>

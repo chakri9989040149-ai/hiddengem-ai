@@ -18,6 +18,20 @@ import {
   MapPin,
   Clock,
 } from 'lucide-react';
+import { CustomSelect } from '@/components/ui/CustomSelect';
+
+const CROWD_OPTIONS = [
+  { value: 'All', label: 'All Crowd Levels' },
+  { value: 'Low', label: '🟢 Low Crowd Only' },
+  { value: 'Moderate', label: '🟡 Moderate Crowd' },
+];
+
+const TIME_OPTIONS = [
+  { value: 30, label: 'Within 30 Mins Drive' },
+  { value: 60, label: 'Within 60 Mins Drive' },
+  { value: 90, label: 'Within 90 Mins Drive' },
+  { value: 150, label: 'All Distances' },
+];
 
 export default function HiddenGemsPage() {
   const { preferences, selectedDestinationSlug, setSelectedDestinationSlug, getSelectedDestination } =
@@ -122,29 +136,22 @@ export default function HiddenGemsPage() {
 
           {/* Crowd Filter */}
           <div>
-            <select
+            <CustomSelect
               value={crowdFilter}
-              onChange={(e) => setCrowdFilter(e.target.value)}
-              className="w-full p-2.5 rounded-xl border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 font-bold"
-            >
-              <option value="All">All Crowd Levels</option>
-              <option value="Low">Low Crowd Only</option>
-              <option value="Moderate">Moderate Crowd</option>
-            </select>
+              onChange={(val) => setCrowdFilter(String(val))}
+              options={CROWD_OPTIONS}
+              placeholder="Crowd Level"
+            />
           </div>
 
           {/* Travel Time Filter */}
           <div>
-            <select
+            <CustomSelect
               value={maxTimeFilter}
-              onChange={(e) => setMaxTimeFilter(parseInt(e.target.value))}
-              className="w-full p-2.5 rounded-xl border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 font-bold"
-            >
-              <option value={30}>Within 30 Mins Drive</option>
-              <option value={60}>Within 60 Mins Drive</option>
-              <option value={90}>Within 90 Mins Drive</option>
-              <option value={150}>All Distances</option>
-            </select>
+              onChange={(val) => setMaxTimeFilter(Number(val))}
+              options={TIME_OPTIONS}
+              placeholder="Travel Time"
+            />
           </div>
         </div>
 

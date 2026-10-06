@@ -108,7 +108,7 @@ export function ExpenseSplitter() {
               placeholder="Expense title (e.g. Jeep Safari)"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="p-2.5 rounded-xl border border-stone-200 dark:border-stone-700 text-xs bg-white dark:bg-stone-900"
+              className="p-2.5 rounded-xl border border-stone-200 dark:border-stone-700 text-xs bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 placeholder:text-stone-400"
               required
             />
             <input
@@ -116,13 +116,13 @@ export function ExpenseSplitter() {
               placeholder="Amount (₹)"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
-              className="p-2.5 rounded-xl border border-stone-200 dark:border-stone-700 text-xs bg-white dark:bg-stone-900"
+              className="p-2.5 rounded-xl border border-stone-200 dark:border-stone-700 text-xs bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 placeholder:text-stone-400"
               required
             />
             <select
               value={paidBy}
               onChange={(e) => setPaidBy(e.target.value)}
-              className="p-2.5 rounded-xl border border-stone-200 dark:border-stone-700 text-xs bg-white dark:bg-stone-900"
+              className="p-2.5 rounded-xl border border-stone-200 dark:border-stone-700 text-xs bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 font-medium"
             >
               {participants.map((p) => (
                 <option key={p} value={p}>
@@ -133,7 +133,7 @@ export function ExpenseSplitter() {
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value as any)}
-              className="p-2.5 rounded-xl border border-stone-200 dark:border-stone-700 text-xs bg-white dark:bg-stone-900"
+              className="p-2.5 rounded-xl border border-stone-200 dark:border-stone-700 text-xs bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 font-medium"
             >
               <option value="Stay">Stay</option>
               <option value="Food">Food</option>

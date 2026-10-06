@@ -81,13 +81,13 @@ export function Navbar() {
                   key={link.href}
                   href={link.href}
                   className={cn(
-                    'px-3 py-1.5 rounded-lg text-xs xl:text-sm font-medium transition-all flex items-center gap-1.5',
+                    'px-3 py-1.5 rounded-lg text-xs xl:text-sm font-semibold transition-all flex items-center gap-1.5',
                     isActive
-                      ? 'bg-emerald-100/80 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 font-semibold'
-                      : 'text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 hover:bg-stone-200/50 dark:hover:bg-stone-800/50'
+                      ? 'bg-emerald-100/90 dark:bg-emerald-950/90 text-emerald-900 dark:text-emerald-300 font-bold'
+                      : 'text-stone-700 dark:text-stone-200 hover:text-stone-950 dark:hover:text-white hover:bg-stone-200/60 dark:hover:bg-stone-800/60'
                   )}
                 >
-                  <Icon className={cn('w-3.5 h-3.5', isActive ? 'text-emerald-700 dark:text-emerald-400' : 'text-stone-400 dark:text-stone-300')} />
+                  <Icon className={cn('w-3.5 h-3.5', isActive ? 'text-emerald-700 dark:text-emerald-400' : 'text-stone-500 dark:text-stone-300')} />
                   <span>{link.label}</span>
                 </Link>
               );

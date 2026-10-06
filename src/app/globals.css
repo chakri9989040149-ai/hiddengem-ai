@@ -59,7 +59,7 @@
     --accent-foreground: #082f49;
     
     --muted: #1c2a24;
-    --muted-foreground: #9ca3af;
+    --muted-foreground: #d6d3d1;
     
     --destructive: #ef4444;
     --destructive-foreground: #ffffff;
@@ -79,6 +79,61 @@ body {
   font-feature-settings: "rlig" 1, "calt" 1;
   transition: color 0.25s ease;
   overflow-x: hidden;
+}
+
+/* ========================================================
+   GLOBAL ACCESSIBLE TYPOGRAPHY & FORM CONTROLS
+======================================================== */
+input,
+select,
+textarea,
+button {
+  font-family: inherit;
+  color: inherit;
+}
+
+/* Form control text colors */
+input,
+select,
+textarea {
+  color: #1c1917;
+}
+
+.dark input,
+.dark select,
+.dark textarea {
+  color: #f5f5f4 !important;
+}
+
+/* Explicit native select dropdown options contrast */
+select option {
+  background-color: #ffffff;
+  color: #1c1917;
+  padding: 6px 10px;
+}
+
+.dark select option {
+  background-color: #1c1917 !important;
+  color: #f5f5f4 !important;
+}
+
+select option:disabled {
+  color: #9ca3af;
+}
+
+.dark select option:disabled {
+  color: #78716c !important;
+}
+
+/* Form placeholder high-contrast accessibility */
+::placeholder {
+  color: #6b7280;
+  opacity: 1;
+}
+
+.dark ::placeholder {
+  color: #a8a29e !important;
+  opacity: 1;
 }
 
 /* Glassmorphism utility */

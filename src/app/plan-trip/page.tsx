@@ -228,7 +228,7 @@ export default function PlanTripPage() {
           className={`px-4 py-2.5 rounded-xl transition-all flex items-center gap-1.5 whitespace-nowrap ${
             activeTab === 'preferences'
               ? 'bg-emerald-700 text-white shadow'
-              : 'bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-400 hover:bg-stone-200'
+              : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-200 hover:bg-stone-200 dark:hover:bg-stone-700'
           }`}
         >
           <span>1. Trip Preferences</span>
@@ -239,7 +239,7 @@ export default function PlanTripPage() {
           className={`px-4 py-2.5 rounded-xl transition-all flex items-center gap-1.5 whitespace-nowrap ${
             activeTab === 'recommendations'
               ? 'bg-emerald-700 text-white shadow'
-              : 'bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-400 hover:bg-stone-200'
+              : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-200 hover:bg-stone-200 dark:hover:bg-stone-700'
           }`}
         >
           <Sparkles className="w-3.5 h-3.5" />
@@ -254,7 +254,7 @@ export default function PlanTripPage() {
           className={`px-4 py-2.5 rounded-xl transition-all flex items-center gap-1.5 whitespace-nowrap ${
             activeTab === 'itinerary'
               ? 'bg-emerald-700 text-white shadow'
-              : 'bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-400 hover:bg-stone-200'
+              : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-200 hover:bg-stone-200 dark:hover:bg-stone-700'
           }`}
         >
           <Calendar className="w-3.5 h-3.5" />
@@ -269,7 +269,7 @@ export default function PlanTripPage() {
           className={`px-4 py-2.5 rounded-xl transition-all flex items-center gap-1.5 whitespace-nowrap ${
             activeTab === 'budget'
               ? 'bg-emerald-700 text-white shadow'
-              : 'bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-400 hover:bg-stone-200'
+              : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-200 hover:bg-stone-200 dark:hover:bg-stone-700'
           }`}
         >
           <Wallet className="w-3.5 h-3.5" />
@@ -281,7 +281,7 @@ export default function PlanTripPage() {
           className={`px-4 py-2.5 rounded-xl transition-all flex items-center gap-1.5 whitespace-nowrap ${
             activeTab === 'map'
               ? 'bg-emerald-700 text-white shadow'
-              : 'bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-400 hover:bg-stone-200'
+              : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-200 hover:bg-stone-200 dark:hover:bg-stone-700'
           }`}
         >
           <MapPin className="w-3.5 h-3.5" />
@@ -747,7 +747,7 @@ export default function PlanTripPage() {
           {/* People, Duration & Budget */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-4 border-t border-stone-100 dark:border-stone-800">
             <div>
-              <label className="text-xs uppercase font-extrabold text-stone-600 dark:text-stone-400 block mb-1">
+              <label className="text-xs uppercase font-black text-stone-700 dark:text-stone-200 block mb-1">
                 Travellers: {preferences.groupSize}
               </label>
               <input
@@ -761,7 +761,7 @@ export default function PlanTripPage() {
             </div>
 
             <div>
-              <label className="text-xs uppercase font-extrabold text-stone-600 dark:text-stone-400 block mb-1">
+              <label className="text-xs uppercase font-black text-stone-700 dark:text-stone-200 block mb-1">
                 Trip Duration: {preferences.durationDays} Days
               </label>
               <div className="grid grid-cols-4 gap-1">
@@ -773,7 +773,7 @@ export default function PlanTripPage() {
                     className={`py-1.5 rounded-lg text-xs font-bold ${
                       preferences.durationDays === d
                         ? 'bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900'
-                        : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300'
+                        : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-200 hover:bg-stone-200 dark:hover:bg-stone-700'
                     }`}
                   >
                     {d}D
@@ -783,7 +783,7 @@ export default function PlanTripPage() {
             </div>
 
             <div>
-              <label className="text-xs uppercase font-extrabold text-stone-600 dark:text-stone-400 block mb-1">
+              <label className="text-xs uppercase font-black text-stone-700 dark:text-stone-200 block mb-1">
                 Target Budget: {formatCurrency(preferences.totalBudgetInr || 10000)}
               </label>
               <input

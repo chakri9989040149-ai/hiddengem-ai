@@ -24,6 +24,7 @@ import {
   Hotel,
   Utensils,
 } from 'lucide-react';
+import { CustomSelect } from '@/components/ui/CustomSelect';
 
 const SPIN_CAROUSEL_IMAGES = [
   { label: 'Scenic Mountain Train', image: TRAVEL_VISUALS.transport.Train[0] },
@@ -41,6 +42,29 @@ export default function SurpriseMePage() {
   const [isSpinning, setIsSpinning] = useState(false);
   const [spinIndex, setSpinIndex] = useState(0);
   const [result, setResult] = useState<any>(null);
+
+  const travellerOptions = [
+    { value: 1, label: '1 Person', subtitle: 'Solo explorer' },
+    { value: 2, label: '2 People', subtitle: 'Couples / Duo' },
+    { value: 4, label: '4 People', subtitle: 'Small group / Family' },
+    { value: 6, label: '6 People', subtitle: 'Group adventure' },
+    { value: 8, label: '8 People', subtitle: 'Grand squad' },
+  ];
+
+  const durationOptions = [
+    { value: 1, label: '1 Day Escape', subtitle: 'Quick getaway' },
+    { value: 2, label: '2 Days Escape', subtitle: 'Weekend break' },
+    { value: 3, label: '3 Days Escape', subtitle: 'Extended long weekend' },
+    { value: 4, label: '4 Days Escape', subtitle: 'Immersive exploration' },
+    { value: 5, label: '5 Days Escape', subtitle: 'Grand expedition' },
+  ];
+
+  const budgetOptions = [
+    { value: 6000, label: '₹6,000 (Budget)', subtitle: 'Hostels & local transit' },
+    { value: 10000, label: '₹10,000 (Standard)', subtitle: 'Boutique stays & cabs' },
+    { value: 20000, label: '₹20,000 (Comfort)', subtitle: 'Resorts & private transfers' },
+    { value: 40000, label: '₹40,000 (Luxury)', subtitle: 'Premium villas & private guide' },
+  ];
 
   // Animated image carousel during spin
   useEffect(() => {
@@ -113,64 +137,50 @@ export default function SurpriseMePage() {
         <h1 className="text-4xl sm:text-6xl font-black text-stone-900 dark:text-stone-100 tracking-tight">
           🎲 Surprise Me!
         </h1>
-        <p className="text-stone-600 dark:text-stone-400 text-sm sm:text-base leading-relaxed">
+        <p className="text-stone-700 dark:text-stone-300 text-sm sm:text-base leading-relaxed">
           Tired of endless overthinking? One click spins through verified uncrowded destinations and composes a complete spontaneous journey with stays, transit, and cuisine.
         </p>
       </div>
 
       {/* Control Inputs */}
-      <div className="p-6 rounded-3xl border border-stone-200 dark:border-stone-800 bg-white/80 dark:bg-stone-900/80 backdrop-blur-xl shadow-xl grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
+      <div className="p-6 rounded-3xl border border-stone-200/90 dark:border-stone-800 bg-white/90 dark:bg-stone-900/90 backdrop-blur-xl shadow-xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
         <div>
-          <span className="text-stone-400 uppercase font-extrabold block mb-1">Travellers</span>
-          <select
+          <CustomSelect
+            label="TRAVELLERS"
             value={preferences.groupSize}
-            onChange={(e) => updatePreferences({ groupSize: parseInt(e.target.value) })}
-            className="w-full p-3 rounded-xl border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 font-bold"
-          >
-            {[1, 2, 4, 6, 8].map((n) => (
-              <option key={n} value={n}>
-                {n} {n === 1 ? 'Person' : 'People'}
-              </option>
-            ))}
-          </select>
+            onChange={(val) => updatePreferences({ groupSize: parseInt(val) })}
+            options={travellerOptions}
+          />
         </div>
 
         <div>
-          <span className="text-stone-400 uppercase font-extrabold block mb-1">Duration</span>
-          <select
+          <CustomSelect
+            label="DURATION"
             value={preferences.durationDays}
-            onChange={(e) => updatePreferences({ durationDays: parseInt(e.target.value) })}
-            className="w-full p-3 rounded-xl border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 font-bold"
-          >
-            {[1, 2, 3, 4, 5].map((d) => (
-              <option key={d} value={d}>
-                {d} Days Escape
-              </option>
-            ))}
-          </select>
+            onChange={(val) => updatePreferences({ durationDays: parseInt(val) })}
+            options={durationOptions}
+          />
         </div>
 
         <div>
-          <span className="text-stone-400 uppercase font-extrabold block mb-1">Target Budget</span>
-          <select
+          <CustomSelect
+            label="TARGET BUDGET"
             value={preferences.totalBudgetInr || 10000}
-            onChange={(e) => updatePreferences({ totalBudgetInr: parseInt(e.target.value) })}
-            className="w-full p-3 rounded-xl border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 font-bold"
-          >
-            <option value="6000">₹6,000 (Budget)</option>
-            <option value="10000">₹10,000 (Standard)</option>
-            <option value="20000">₹20,000 (Comfort)</option>
-            <option value="40000">₹40,000 (Luxury)</option>
-          </select>
+            onChange={(val) => updatePreferences({ totalBudgetInr: parseInt(val) })}
+            options={budgetOptions}
+          />
         </div>
 
-        <div className="flex items-end">
+        <div className="flex flex-col justify-end">
+          <span className="text-transparent uppercase font-black text-[11px] tracking-wider block mb-1.5 hidden lg:block select-none">
+            Action
+          </span>
           <button
             onClick={handleSpin}
             disabled={isSpinning}
-            className="w-full py-3.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-950 font-black text-xs shadow-lg shadow-amber-500/25 flex items-center justify-center gap-1.5 transition-all hover:scale-105 active:scale-95 disabled:opacity-70"
+            className="w-full py-3.5 rounded-xl bg-amber-500 hover:bg-amber-400 active:bg-amber-600 text-stone-950 font-black text-xs shadow-lg shadow-amber-500/25 flex items-center justify-center gap-1.5 transition-all hover:scale-102 active:scale-98 disabled:opacity-70"
           >
-            <Dices className={`w-4 h-4 ${isSpinning ? 'animate-spin' : ''}`} />
+            <Dices className={`w-4 h-4 text-stone-950 ${isSpinning ? 'animate-spin' : ''}`} />
             <span>{isSpinning ? 'Cycling Destinations...' : 'SPIN FOR ADVENTURE'}</span>
           </button>
         </div>
@@ -271,10 +281,10 @@ export default function SurpriseMePage() {
                   <h4 className="font-extrabold text-base text-stone-900 dark:text-stone-100 group-hover:text-emerald-600 transition-colors">
                     {gem.name}
                   </h4>
-                  <p className="text-xs text-stone-500 line-clamp-2">{gem.subtitle}</p>
-                  <div className="pt-2 flex justify-between text-xs font-bold text-stone-600 dark:text-stone-400 border-t border-stone-100 dark:border-stone-800">
+                  <p className="text-xs text-stone-600 dark:text-stone-300 line-clamp-2">{gem.subtitle}</p>
+                  <div className="pt-2 flex justify-between text-xs font-bold text-stone-700 dark:text-stone-200 border-t border-stone-100 dark:border-stone-800">
                     <span>{formatTime(gem.travelTimeMinutes)} drive</span>
-                    <span className="text-emerald-600">🟢 {gem.crowdData.level} crowd</span>
+                    <span className="text-emerald-600 dark:text-emerald-400 font-extrabold">🟢 {gem.crowdData.level} crowd</span>
                   </div>
                 </div>
               </div>
@@ -296,12 +306,12 @@ export default function SurpriseMePage() {
                 <h4 className="font-extrabold text-base text-stone-900 dark:text-stone-100">
                   {result.hotel.name}
                 </h4>
-                <p className="text-xs text-stone-500">
+                <p className="text-xs text-stone-600 dark:text-stone-300">
                   {result.hotel.type} • {result.hotel.rating}★ Rating
                 </p>
                 <div className="pt-2 flex justify-between text-xs font-bold border-t border-stone-100 dark:border-stone-800">
-                  <span className="text-stone-500">Nightly tariff</span>
-                  <span className="text-sky-600 font-black">{formatCurrency(result.hotel.pricePerNightInr)}</span>
+                  <span className="text-stone-600 dark:text-stone-400">Nightly tariff</span>
+                  <span className="text-sky-600 dark:text-sky-400 font-black">{formatCurrency(result.hotel.pricePerNightInr)}</span>
                 </div>
               </div>
             </div>
